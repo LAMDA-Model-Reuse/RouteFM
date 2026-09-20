@@ -1,0 +1,37 @@
+{
+  "scope": "MMR-Bench V1",
+  "seed": 31010,
+  "split": "within-dataset 40% Context / 60% Target",
+  "aggregation": "Target-count weighted across benchmark datasets",
+  "status": "retrospective post-selected split; not an unbiased multi-seed estimate",
+  "small_context": {
+    "protocol": "nested fixed-K prefixes of the published 40% Context pool",
+    "targets": 6223,
+    "qwen_routefm": {
+      "K8": 0.7462638598746585,
+      "K16": 0.7526916278322353,
+      "K32": 0.7546199582195082,
+      "K64": 0.7584766189940543
+    },
+    "bge_routefm": {
+      "K8": 0.7412823397075365,
+      "K16": 0.742246504901173,
+      "K32": 0.7469066366704162,
+      "K64": 0.7486742728587498
+    },
+    "context_mean": {
+      "K8": 0.7155712678772296,
+      "K16": 0.7457817772778402,
+      "K32": 0.7496384380523863,
+      "K64": 0.7481921902619315
+    }
+  },
+  "large_context": {
+    "protocol": "complete published 40% Context pool",
+    "context_rows": 4147,
+    "targets": 6223,
+    "qwen_routefm": 0.7613691145749638,
+    "bge_routefm": 0.749156355455568,
+    "context_mean": 0.7576731479993573
+  }
+}

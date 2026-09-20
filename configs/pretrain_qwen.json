@@ -1,0 +1,448 @@
+{
+  "release_version": "RouteFM 1.0 (qwen)",
+  "seed": 34001,
+  "data": {
+    "type": "mixed",
+    "model_partition": "fit",
+    "model_holdout_fraction": 0.2,
+    "model_partition_seed": 30001,
+    "dense_entries": [
+      {
+        "source": "llmrouterbench",
+        "split": "train",
+        "path": "data/processed/llmrouterbench_qwen3vl4096"
+      },
+      {
+        "source": "routerbench",
+        "split": "train",
+        "path": "data/processed/routerbench_qwen3vl4096"
+      },
+      {
+        "source": "routerbench",
+        "split": "test",
+        "path": "data/processed/routerbench_qwen3vl4096"
+      },
+      {
+        "source": "mixinstruct",
+        "split": "train",
+        "path": "data/processed/mixinstruct_qwen3vl4096"
+      },
+      {
+        "source": "mixinstruct",
+        "split": "test",
+        "path": "data/processed/mixinstruct_qwen3vl4096"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/arc"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/bbh"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/gpqa"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/gsm8k"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/harness_truthfulqa_mc_0"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/hellaswag"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/ifeval"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/math"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/mmlu"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/mmlu_pro"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/musr"
+      },
+      {
+        "source": "routereval_raw",
+        "split": "train",
+        "path": "data/processed/routereval_raw_k10_qwen3vl4096/winogrande"
+      }
+    ],
+    "jsonl_entries": [],
+    "source_weights": {
+      "llmrouterbench": 0.45,
+      "routerbench": 0.25,
+      "routereval_raw": 0.25,
+      "mixinstruct": 0.05
+    },
+    "evaluation_suites": {
+      "validation_reference": {
+        "enabled_sources": [
+          "llmrouterbench",
+          "routerbench",
+          "routereval_raw",
+          "mixinstruct"
+        ],
+        "source_weights": {
+          "llmrouterbench": 0.4,
+          "routerbench": 0.15,
+          "routereval_raw": 0.4,
+          "mixinstruct": 0.05
+        }
+      }
+    }
+  },
+  "model": {
+    "query_dim": 4096,
+    "hidden_dim": 256,
+    "projection_dim": 512,
+    "ffn_dim": 1024,
+    "heads": 8,
+    "profile_layers": 4,
+    "readout_layers": 2,
+    "pool_layers": 3,
+    "capability_tokens": 24,
+    "quality_bins": 21,
+    "observation_features": 2,
+    "observation_schema": "score_cost",
+    "dropout": 0.1,
+    "target_query_scale": 1.0,
+    "outcome_residual_init": 3.0,
+    "use_pool_transformer": true,
+    "architecture": "profile_context",
+    "local_context_layers": 2,
+    "local_context_topk": 0,
+    "local_context_residual_init": 0.1,
+    "context_scale_conditioning": false,
+    "auxiliary_distribution_head": false,
+    "utility_cost_weight": 0.0,
+    "utility_uncertainty_weight": 0.0,
+    "auxiliary_extended_observation_encoder": false,
+    "local_context_mode": "parallel_static",
+    "local_context_gate_hidden": 64,
+    "local_context_gate_init": 0.25,
+    "local_context_semantic_bias": 0.0
+  },
+  "episodes": {
+    "type": "task_local",
+    "min_models": 6,
+    "max_models": 24,
+    "context_sizes": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "min_targets": 16,
+    "max_targets": 32,
+    "max_episode_attempts": 32,
+    "max_task_resamples": 64,
+    "episode_type_weights": {
+      "natural": 0.65,
+      "opportunity": 0.2,
+      "boundary": 0.15
+    },
+    "context_layout_weights": {
+      "aligned_dense": 0.5714285714,
+      "aligned_sparse": 0.4285714286,
+      "unaligned_sparse": 0.0
+    },
+    "boundary_min_fraction": 0.25,
+    "boundary_q": 0.25,
+    "boundary_threshold_min": 0.02,
+    "boundary_threshold_max": 0.08,
+    "aligned_sparse_coverages": [
+      0.4,
+      0.6,
+      0.8
+    ],
+    "unaligned_shared_fractions": [
+      0.0
+    ],
+    "sources_per_batch": 1,
+    "tasks_per_batch": 1
+  },
+  "training": {
+    "device": "cuda",
+    "init_from": null,
+    "steps": 10000,
+    "effective_batch_size": 16,
+    "lr": 0.0001,
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.05,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "log_every": 20,
+    "save_every": 1000,
+    "selection_min_step": 7000,
+    "output_dir": "outputs/pretraining_qwen",
+    "scale_groups": {
+      "small": {
+        "context_sizes": [
+          8,
+          16,
+          32,
+          64
+        ],
+        "weight": 0.5
+      },
+      "large": {
+        "context_sizes": [
+          256,
+          512,
+          1024
+        ],
+        "weight": 0.5
+      },
+      "global": {
+        "context_sizes": [
+          128,
+          256,
+          512,
+          1024
+        ],
+        "weight": 0.5
+      },
+      "deployment": {
+        "context_sizes": [
+          8,
+          16,
+          32,
+          64
+        ],
+        "weight": 0.5
+      }
+    },
+    "loss_weights": {
+      "distribution_weight": 1.0,
+      "mean_weight": 0.25,
+      "pairwise_weight": 0.5,
+      "regret_weight": 0.5,
+      "gap_weight": 0.0,
+      "mean_huber_beta": 0.05,
+      "gap_huber_beta": 0.05,
+      "pairwise_target_temperature": 0.05,
+      "pairwise_prediction_temperature": 0.1,
+      "pairwise_reliability_prior": 1.0,
+      "routing_temperature": 0.1,
+      "score_weight": 1.0,
+      "score_pairwise_weight": 0.5,
+      "score_regret_weight": 0.0,
+      "cost_weight": 0.25,
+      "cost_pairwise_weight": 0.1,
+      "score_huber_beta": 0.05,
+      "cost_huber_beta": 0.05
+    },
+    "curriculum": [
+      {
+        "name": "capability_foundation",
+        "end_step": 3500,
+        "loss_mode": "multi_output_point",
+        "effective_batch_size": 16,
+        "scale_weights": {
+          "global": 1.0
+        },
+        "lr_start_scale": 1.0,
+        "lr_end_scale": 0.2,
+        "warmup_steps": 400
+      },
+      {
+        "name": "query_conditioned_comparison",
+        "end_step": 7000,
+        "loss_mode": "multi_output_point_regret",
+        "effective_batch_size": 16,
+        "scale_weights": {
+          "global": 0.5,
+          "deployment": 0.5
+        },
+        "lr_start_scale": 0.5,
+        "lr_end_scale": 0.15,
+        "warmup_steps": 0,
+        "loss_weights": {
+          "score_regret_weight": 0.15
+        }
+      },
+      {
+        "name": "deployment_adaptation",
+        "end_step": 10000,
+        "loss_mode": "multi_output_point_regret",
+        "effective_batch_size": 16,
+        "scale_weights": {
+          "global": 0.3,
+          "deployment": 0.7
+        },
+        "lr_start_scale": 0.25,
+        "lr_end_scale": 0.02,
+        "warmup_steps": 0,
+        "loss_weights": {
+          "score_regret_weight": 0.25
+        }
+      }
+    ],
+    "validation": {
+      "every": 1000,
+      "episodes_per_cell": 8,
+      "data_split": "val",
+      "evaluation_suite": "validation_reference",
+      "evaluation_seed": 30011,
+      "scale_weights": {
+        "small": 0.5,
+        "large": 0.5,
+        "global": 0.5,
+        "deployment": 0.5
+      },
+      "source_weights": {
+        "llmrouterbench": 0.4,
+        "routerbench": 0.15,
+        "routereval_raw": 0.4,
+        "mixinstruct": 0.05
+      },
+      "data": {
+        "type": "mixed",
+        "model_partition": "fit",
+        "model_holdout_fraction": 0.2,
+        "model_partition_seed": 30001,
+        "dense_entries": [
+          {
+            "source": "llmrouterbench",
+            "split": "train",
+            "path": "data/processed/llmrouterbench_qwen3vl4096"
+          },
+          {
+            "source": "routerbench",
+            "split": "train",
+            "path": "data/processed/routerbench_qwen3vl4096"
+          },
+          {
+            "source": "routerbench",
+            "split": "test",
+            "path": "data/processed/routerbench_qwen3vl4096"
+          },
+          {
+            "source": "mixinstruct",
+            "split": "train",
+            "path": "data/processed/mixinstruct_qwen3vl4096"
+          },
+          {
+            "source": "mixinstruct",
+            "split": "test",
+            "path": "data/processed/mixinstruct_qwen3vl4096"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/arc"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/bbh"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/gpqa"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/gsm8k"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/harness_truthfulqa_mc_0"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/hellaswag"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/ifeval"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/math"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/mmlu"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/mmlu_pro"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/musr"
+          },
+          {
+            "source": "routereval_raw",
+            "split": "train",
+            "path": "data/processed/routereval_raw_k10_qwen3vl4096/winogrande"
+          }
+        ],
+        "jsonl_entries": [],
+        "source_weights": {
+          "llmrouterbench": 0.45,
+          "routerbench": 0.25,
+          "routereval_raw": 0.25,
+          "mixinstruct": 0.05
+        },
+        "evaluation_suites": {
+          "validation_reference": {
+            "enabled_sources": [
+              "llmrouterbench",
+              "routerbench",
+              "routereval_raw",
+              "mixinstruct"
+            ],
+            "source_weights": {
+              "llmrouterbench": 0.4,
+              "routerbench": 0.15,
+              "routereval_raw": 0.4,
+              "mixinstruct": 0.05
+            }
+          }
+        }
+      }
+    },
+    "microbatch_size": 4
+  }
+}
