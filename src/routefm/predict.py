@@ -8,18 +8,38 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from routefm.checkpoints import (
+    ResolvedCheckpoint,
+    load_safetensors_config,
+    resolve_checkpoint,
+)
 from routefm.models import RouteFM, RouteFMConfig
 
 
-RELEASE = Path(__file__).resolve().parents[2]
+def load_router(
+    checkpoint: str | Path | ResolvedCheckpoint,
+    device: str = "cpu",
+    expected_encoder: str | None = None,
+) -> RouteFM:
+    resolved = checkpoint if isinstance(checkpoint, ResolvedCheckpoint) else resolve_checkpoint(
+        expected_encoder or "qwen", checkpoint
+    )
+    if resolved.weights.suffix == ".safetensors":
+        from safetensors.torch import load_file
 
-
-def load_router(checkpoint: str | Path, device: str = "cpu") -> RouteFM:
-    saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    if saved.get("format") != "routefm_unified_scratch":
-        raise ValueError("unsupported RouteFM checkpoint")
+        saved = load_safetensors_config(resolved)
+        if saved.get("format") != "routefm_safetensors":
+            raise ValueError("unsupported RouteFM safetensors configuration")
+        state = load_file(resolved.weights, device="cpu")
+    else:
+        saved = torch.load(resolved.weights, map_location="cpu", weights_only=True)
+        if saved.get("format") != "routefm_unified_scratch":
+            raise ValueError("unsupported RouteFM checkpoint")
+        state = saved["model"]
+    if expected_encoder is not None and saved.get("encoder") != expected_encoder:
+        raise ValueError("checkpoint encoder does not match --encoder")
     model = RouteFM(RouteFMConfig(**saved["model_config"]))
-    model.load_state_dict(saved["model"], strict=True)
+    model.load_state_dict(state, strict=True)
     return model.to(device).eval()
 
 
@@ -68,9 +88,11 @@ def prepare_episode(input_path: str | Path, dimension: int, device: str) -> dict
 
 
 @torch.inference_mode()
-def predict(checkpoint: str | Path, input_path: str | Path, device: str = "cpu",
-            target_batch_size: int = 128, model_names: list[str] | None = None) -> dict:
-    model = load_router(checkpoint, device)
+def predict(checkpoint: str | Path | ResolvedCheckpoint, input_path: str | Path,
+            device: str = "cpu", target_batch_size: int = 128,
+            model_names: list[str] | None = None,
+            expected_encoder: str | None = None) -> dict:
+    model = load_router(checkpoint, device, expected_encoder)
     episode = prepare_episode(input_path, model.config.query_dim, device)
     candidates = episode["candidate_mask"].shape[1]
     if model_names is not None and (len(model_names) != candidates or len(set(model_names)) != candidates):
@@ -111,12 +133,11 @@ def main() -> None:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--target-batch-size", type=int, default=128)
     args = parser.parse_args()
-    checkpoint = args.checkpoint or RELEASE / f"weights/routefm_{args.encoder}.pt"
-    saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    if saved.get("encoder") != args.encoder:
-        raise ValueError("checkpoint encoder does not match --encoder")
+    checkpoint = resolve_checkpoint(args.encoder, args.checkpoint)
     names = json.loads(Path(args.model_names).read_text()) if args.model_names else None
-    result = predict(checkpoint, args.input, args.device, args.target_batch_size, names)
+    result = predict(
+        checkpoint, args.input, args.device, args.target_batch_size, names, args.encoder
+    )
     destination = Path(args.output)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")

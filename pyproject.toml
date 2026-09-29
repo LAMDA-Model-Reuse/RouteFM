@@ -4,12 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "routefm-router"
-version = "1.0.0"
+version = "1.0.1"
 description = "Pretrained in-context model routing with Qwen and BGE encoders"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 classifiers = ["License :: OSI Approved :: Apache Software License"]
-dependencies = ["torch>=2.1", "numpy>=1.24", "pandas>=2.0", "PyYAML>=6.0"]
+dependencies = [
+  "torch>=2.1",
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "PyYAML>=6.0",
+  "huggingface_hub>=0.26",
+  "safetensors>=0.4",
+]
 
 [project.optional-dependencies]
 bge = ["transformers>=4.40"]
@@ -27,3 +34,4 @@ routefm-train = "routefm.training.unified_scratch:main"
 routefm-prepare-data = "routefm.prepare_data:main"
 routefm-embed-qwen = "routefm.embed_qwen:main"
 routefm-embed-bge = "routefm.embed_bge:main"
+routefm-download = "routefm.download:main"

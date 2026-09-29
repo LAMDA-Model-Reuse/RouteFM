@@ -17,12 +17,20 @@ not an assembly of several checkpoints. The package does not redistribute
 third-party datasets, images, or embedding-model weights/services. Their
 licenses and access requirements apply separately.
 
+The canonical RouteFM weights are published at
+[AIGNLAI/RouteFM](https://huggingface.co/AIGNLAI/RouteFM). The command-line
+tools download safetensors from an immutable Hub revision on first use,
+validate their SHA-256 digests, and then reuse the standard Hugging Face
+cache.
+
 Install with Python 3.10+:
 
 ```bash
 python -m pip install -e .
 # Optional, if you want to generate BGE embeddings locally:
 python -m pip install -e '.[bge]'
+# Optional: prefetch and verify both weights for offline jobs:
+routefm-download --encoder all
 ```
 
 From this directory, evaluate an independently obtained MMR-Bench V1 artifact:
@@ -46,7 +54,7 @@ commands use the explicit seed-31010 within-dataset 40:60 IDs in
 [`docs/MMRBENCH_V1.md`](docs/MMRBENCH_V1.md) for complete data and aggregation
 rules. The 40% side is observed Context, not optimizer training data.
 
-To route your own candidate pool using the included weights:
+To route your own candidate pool using the published weights:
 
 ```bash
 routefm-predict --encoder qwen --input my_episode.npz \
@@ -55,11 +63,18 @@ routefm-predict --encoder bge --input my_text_episode.npz \
   --output text_predictions.json --device cpu
 ```
 
+Pass `--checkpoint /path/to/checkpoint.pt` to use a local legacy checkpoint
+without network access. A local safetensors override must have its matching
+`config.json` beside it. Standard Hugging Face settings such as `HF_HOME` and
+`HF_HUB_OFFLINE=1` control cache location and offline operation; offline mode
+works after the pinned artifacts have been cached.
+
 The `.npz` schema, embedding generation, observation masks, and output meaning
 are in [`docs/CUSTOM_DATA.md`](docs/CUSTOM_DATA.md). Pretraining data layout,
 source proportions, curriculum, and commands are in
-[`docs/PRETRAINING.md`](docs/PRETRAINING.md). The released weights and source
-file SHA-256 digests are recorded in [`manifest.json`](manifest.json).
+[`docs/PRETRAINING.md`](docs/PRETRAINING.md). The model repository records the
+canonical safetensors, original v1.0.0 checkpoints, configurations, sizes, and
+SHA-256 digests in its `manifest.json`.
 
 The reported MMR-Bench results are retrospective: this benchmark was inspected
 during the broader research process, and seed 31010 was selected after a

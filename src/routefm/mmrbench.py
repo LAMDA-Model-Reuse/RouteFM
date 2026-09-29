@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import torch
 
+from routefm.checkpoints import resolve_checkpoint
 from routefm.predict import load_router
 from routefm.splits import DATASETS, SEEDS, load_canonical, load_split
 from routefm.evaluation.mmrbench_v1_exhaustive import _build_batch, _stable_seed
@@ -147,8 +148,8 @@ def _cli(mode: str) -> None:
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     torch.set_num_threads(2)
-    checkpoint = args.checkpoint or str(RELEASE / f"weights/routefm_{args.encoder}.pt")
-    model = load_router(checkpoint, args.device)
+    checkpoint = resolve_checkpoint(args.encoder, args.checkpoint)
+    model = load_router(checkpoint, args.device, args.encoder)
     if model.config.query_dim != {"qwen": 4096, "bge": 768}[args.encoder]:
         raise ValueError("checkpoint dimension does not match --encoder")
     splits_dir = Path(args.splits_dir)
