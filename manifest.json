@@ -4,6 +4,17 @@
   "model_version": "1.0.0",
   "package_version": "1.0.1",
   "license": "Apache-2.0",
+  "paper": {
+    "title": "Pretrain Once, Route Anywhere: Towards a Foundation Model for LLM Routing",
+    "authors": [
+      "Guannan Lai",
+      "Han-Jia Ye"
+    ],
+    "arxiv": "2609.37362",
+    "url": "https://arxiv.org/abs/2609.37362",
+    "doi": "10.48550/arXiv.2609.37362",
+    "published": "2026-09-29"
+  },
   "source": {
     "repository": "https://github.com/LAMDA-Model-Reuse/RouteFM",
     "model_source_tag": "v1.0.0",

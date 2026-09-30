@@ -1,90 +1,193 @@
-# RouteFM 1.0
+<div align="center">
 
-RouteFM routes a new query among candidate models using their observed quality
-and cost on earlier queries. This standalone release contains two frozen
-routers, their inference and evaluation code, the exact MMR-Bench V1 40:60
-query-ID split, and complete random-initialization pretraining configurations.
+# Pretrain Once, Route Anywhere
 
-| Router | Input encoder | Input dimension | Supported query modality |
-| --- | --- | ---: | --- |
-| Qwen RouteFM | Qwen3-VL-Embedding-8B | 4096 | Text and image together |
-| BGE RouteFM | BAAI/bge-base-en-v1.5, CLS pooling | 768 | Text only |
+### Towards a Foundation Model for LLM Routing
 
-The two routers have the same routing architecture and training recipe except
-for the embedding dimension and encoder-specific vectors. Both frozen weights
-come from a single continuous 10,000-update run from random initialization,
-not an assembly of several checkpoints. The package does not redistribute
-third-party datasets, images, or embedding-model weights/services. Their
-licenses and access requirements apply separately.
+**Guannan Lai · Han-Jia Ye**<br>
+School of Artificial Intelligence & National Key Laboratory for Novel Software Technology, Nanjing University
 
-The canonical RouteFM weights are published at
-[AIGNLAI/RouteFM](https://huggingface.co/AIGNLAI/RouteFM). The command-line
-tools download safetensors from an immutable Hub revision on first use,
-validate their SHA-256 digests, and then reuse the standard Hugging Face
-cache.
+[![Paper](https://img.shields.io/badge/arXiv-2609.37362-b31b1b.svg)](https://arxiv.org/abs/2609.37362)
+[![Models](https://img.shields.io/badge/%F0%9F%A4%97%20Models-RouteFM-FFD21E)](https://huggingface.co/AIGNLAI/RouteFM)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-Install with Python 3.10+:
+**RouteFM learns a reusable routing capability once, then adapts to new tasks,
+candidate pools, and deployment conditions through behavioral context alone.**
+
+</div>
+
+<p align="center">
+  <img src="assets/intro_new.png" width="95%" alt="RouteFM shifts LLM routing from local fitting to global routing pretraining.">
+</p>
+
+## News
+
+- **2026-09-29:** The [RouteFM paper](https://arxiv.org/abs/2609.37362) is available on arXiv.
+- **2026-09-29:** Code, frozen checkpoints, training configurations, and evaluation protocols are publicly released.
+
+## Overview
+
+Large language model routing is commonly treated as a local fitting problem:
+a router is optimized for one workload and one candidate pool, then retrained
+when the environment changes. RouteFM instead approaches routing as a
+foundation-model problem. It learns to characterize anonymous candidate
+models from a small set of behavioral observations and infer their
+target-specific capabilities without relying on model identities.
+
+After episodic pretraining across heterogeneous routing environments, the same
+frozen router transfers across domains, modalities, candidate pools, and
+context budgets. On MMR-Bench, which is excluded from pretraining, RouteFM
+outperforms the strongest non-RouteFM baseline by **2.23 quality points** with
+only eight observations per candidate.
+
+### Highlights
+
+- **Pretrain once:** learn a global routing prior from heterogeneous tasks and candidate pools.
+- **Route anywhere:** adapt a frozen router through behavioral context, without target-domain parameter updates.
+- **Identity-free candidates:** reason about anonymous models from observed quality and relative cost rather than names or provider metadata.
+- **Context-efficient transfer:** deliver the largest gains when only limited behavioral evidence is available.
+
+## Method
+
+<p align="center">
+  <img src="assets/method.png" width="95%" alt="Architecture of RouteFM.">
+</p>
+
+For each anonymous candidate, RouteFM builds a compact capability profile from
+context queries and their observed quality and relative cost. A target query
+retrieves complementary evidence from both the profile and the original
+behavioral context. A permutation-equivariant candidate-pool Transformer then
+compares the current candidates jointly and predicts target-specific quality
+and relative cost.
+
+The released architecture uses 24 capability tokens with hidden dimension
+256. It is pretrained episodically with candidate-slot permutation and a
+combination of point prediction, pairwise ranking, and routing-regret
+objectives. See the [paper](https://arxiv.org/pdf/2609.37362) and
+[pretraining guide](docs/PRETRAINING.md) for details.
+
+## Model zoo
+
+The canonical weights are hosted at
+[AIGNLAI/RouteFM](https://huggingface.co/AIGNLAI/RouteFM). The package downloads
+the safetensors file from an immutable Hub revision, verifies its SHA-256
+digest, and reuses the standard Hugging Face cache.
+
+| Router | Query encoder | Dim. | Query modality | Parameters | Checkpoint |
+| --- | --- | ---: | --- | ---: | --- |
+| RouteFM-Qwen | Qwen3-VL-Embedding-8B | 4096 | Text + image | 12.8M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.0/qwen) |
+| RouteFM-BGE | BAAI/bge-base-en-v1.5 (CLS) | 768 | Text only | 11.1M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.0/bge) |
+
+The query encoders are frozen external feature extractors and are not bundled
+with RouteFM. Both routers were trained from random initialization in one
+continuous 10,000-update run; they differ only in their input dimension and
+encoder-specific vectors.
+
+## Installation
+
+RouteFM requires Python 3.10 or newer.
 
 ```bash
+git clone https://github.com/LAMDA-Model-Reuse/RouteFM.git
+cd RouteFM
 python -m pip install -e .
-# Optional, if you want to generate BGE embeddings locally:
+```
+
+Optional dependencies and checkpoint prefetching:
+
+```bash
+# Generate BGE embeddings locally.
 python -m pip install -e '.[bge]'
-# Optional: prefetch and verify both weights for offline jobs:
+
+# Download and verify both released routers for offline jobs.
 routefm-download --encoder all
 ```
 
-From this directory, evaluate an independently obtained MMR-Bench V1 artifact:
+## Quick start
+
+Prepare an episode following the documented
+[`.npz` schema](docs/CUSTOM_DATA.md), then route each target query:
+
+```bash
+routefm-predict --encoder qwen --input my_episode.npz \
+  --output predictions.json --device cpu
+```
+
+For text-only BGE embeddings:
+
+```bash
+routefm-predict --encoder bge --input my_text_episode.npz \
+  --output text_predictions.json --device cpu
+```
+
+Use `--checkpoint /path/to/checkpoint.pt` for a local legacy checkpoint. A
+local safetensors override must have its matching `config.json` beside it.
+Standard Hugging Face settings such as `HF_HOME` and `HF_HUB_OFFLINE=1`
+control the cache and offline operation.
+
+## Evaluation and reproduction
+
+The paper evaluates a frozen RouteFM on in-domain RouterEval tasks and on
+cross-modal transfer to MMR-Bench. The official MMR-Bench result uses
+dataset-wise five-fold context/target splits; RouteFM reaches **0.7323** at
+K=8 versus **0.7100** for the strongest non-RouteFM baseline, and **0.7614**
+in the large-observation regime.
+
+This repository also includes an independently auditable, fixed seed-31010
+MMR-Bench V1 split. It is a retrospective, post-selected illustrative split
+and is deliberately documented separately from the paper's five-fold result.
+After obtaining the third-party benchmark artifacts, run:
 
 ```bash
 routefm-eval-small --encoder qwen --data-root /path/to/mmr_qwen \
   --output results/qwen_small.json --device cpu
 routefm-eval-large --encoder qwen --data-root /path/to/mmr_qwen \
   --output results/qwen_large.json --device cpu
-routefm-eval-small --encoder bge --data-root /path/to/mmr_bge \
-  --output results/bge_small.json --device cpu
-routefm-eval-large --encoder bge --data-root /path/to/mmr_bge \
-  --output results/bge_large.json --device cpu
 ```
 
-The artifact must have `test.pkl`, `test_embeddings.npy`, and `models.json`.
-The scripts verify the published 10,370 query IDs and nine-model order. Both
-commands use the explicit seed-31010 within-dataset 40:60 IDs in
-[`splits/`](splits/): small Context uses nested K=8/16/32/64 prefixes of the
-40% Context pool, while large Context uses the complete pool. See
-[`docs/MMRBENCH_V1.md`](docs/MMRBENCH_V1.md) for complete data and aggregation
-rules. The 40% side is observed Context, not optimizer training data.
+The evaluator checks the published 10,370 query IDs and nine-model order. See
+[`docs/MMRBENCH_V1.md`](docs/MMRBENCH_V1.md) for the exact data contract,
+split IDs, aggregation rules, reference hashes, BGE commands, and important
+interpretation notes.
 
-To route your own candidate pool using the published weights:
+## Training and custom data
 
-```bash
-routefm-predict --encoder qwen --input my_episode.npz \
-  --output predictions.json --device cpu
-routefm-predict --encoder bge --input my_text_episode.npz \
-  --output text_predictions.json --device cpu
+- [`docs/PRETRAINING.md`](docs/PRETRAINING.md): preprocessing contract, episodic sampling, curriculum, and full pretraining commands.
+- [`docs/CUSTOM_DATA.md`](docs/CUSTOM_DATA.md): episode schema, embedding generation, masks, and prediction outputs.
+- [`manifest.json`](manifest.json): immutable Hub revision, file sizes, configurations, and SHA-256 digests.
+- [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md): provenance and terms for external datasets and encoders.
+
+The release does not redistribute third-party datasets, benchmark images, or
+embedding-model weights/services. Their respective licenses and access terms
+apply separately.
+
+## Limitations
+
+RouteFM assumes that each candidate has valid behavioral observations and that
+candidate order and embedding family remain consistent within an episode. Its
+predicted cost is relative rather than a calibrated monetary or latency
+estimate. The default decision rule selects maximum predicted quality and does
+not impose a cost budget. Performance may change for domains, languages,
+candidate pools, or encoder revisions outside the training distribution.
+
+## Citation
+
+If RouteFM is useful in your research, please cite:
+
+```bibtex
+@misc{lai2026pretrainoncerouteanywhere,
+  title         = {Pretrain Once, Route Anywhere: Towards a Foundation Model for LLM Routing},
+  author        = {Guannan Lai and Han-Jia Ye},
+  year          = {2026},
+  eprint        = {2609.37362},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2609.37362}
+}
 ```
 
-Pass `--checkpoint /path/to/checkpoint.pt` to use a local legacy checkpoint
-without network access. A local safetensors override must have its matching
-`config.json` beside it. Standard Hugging Face settings such as `HF_HOME` and
-`HF_HUB_OFFLINE=1` control cache location and offline operation; offline mode
-works after the pinned artifacts have been cached.
+## License
 
-The `.npz` schema, embedding generation, observation masks, and output meaning
-are in [`docs/CUSTOM_DATA.md`](docs/CUSTOM_DATA.md). Pretraining data layout,
-source proportions, curriculum, and commands are in
-[`docs/PRETRAINING.md`](docs/PRETRAINING.md). The model repository records the
-canonical safetensors, original v1.0.0 checkpoints, configurations, sizes, and
-SHA-256 digests in its `manifest.json`.
-
-The reported MMR-Bench results are retrospective: this benchmark was inspected
-during the broader research process, and seed 31010 was selected after a
-ten-seed split-sensitivity sweep. It must be described as a post-selected
-illustrative split, not an unbiased multi-seed estimate or untouched holdout.
-No MMR-Bench score or cost cells enter the included pretraining recipe.
-RouteFM's default decision rule is highest
-predicted quality; its predicted cost is relative and is not a calibrated
-monetary or latency estimate. This release does not include a MoE router.
-
-RouteFM source code and the released routing weights are provided under the
-Apache License 2.0. Third-party assets retain their own licenses and terms; see
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+RouteFM source code and released routing weights are provided under the
+[Apache License 2.0](LICENSE). Third-party assets retain their original
+licenses and terms.

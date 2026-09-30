@@ -21,6 +21,12 @@ dependencies = [
 [project.optional-dependencies]
 bge = ["transformers>=4.40"]
 
+[project.urls]
+Homepage = "https://github.com/LAMDA-Model-Reuse/RouteFM"
+Paper = "https://arxiv.org/abs/2609.37362"
+Models = "https://huggingface.co/AIGNLAI/RouteFM"
+Issues = "https://github.com/LAMDA-Model-Reuse/RouteFM/issues"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["routefm*"]

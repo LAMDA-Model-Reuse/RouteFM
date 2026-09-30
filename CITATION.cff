@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use RouteFM in your research, please cite the paper below."
+title: "RouteFM"
+type: software
+authors:
+  - family-names: Lai
+    given-names: Guannan
+  - family-names: Ye
+    given-names: Han-Jia
+version: 1.0.1
+date-released: 2026-09-29
+license: Apache-2.0
+repository-code: "https://github.com/LAMDA-Model-Reuse/RouteFM"
+url: "https://huggingface.co/AIGNLAI/RouteFM"
+identifiers:
+  - type: other
+    value: "arXiv:2609.37362"
+    description: "RouteFM paper on arXiv"
+preferred-citation:
+  type: article
+  title: "Pretrain Once, Route Anywhere: Towards a Foundation Model for LLM Routing"
+  authors:
+    - family-names: Lai
+      given-names: Guannan
+    - family-names: Ye
+      given-names: Han-Jia
+  year: 2026
+  journal: "arXiv preprint arXiv:2609.37362"
+  doi: "10.48550/arXiv.2609.37362"
+  url: "https://arxiv.org/abs/2609.37362"
