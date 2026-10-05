@@ -22,8 +22,10 @@
   },
   "hub": {
     "repository": "AIGNLAI/RouteFM",
-    "artifact_revision": "b364300234794b0e6394453d224ddab7c94e41d0",
-    "model_tag": "model-v1.0.0"
+    "artifact_revision": "c9992e6bcfd11f0cb3e14033808d0e852fdc2c74",
+    "repository_config": "config.json",
+    "repository_config_sha256": "fcceac6c349d0c1126310ea2e6b1fc6f5c581d3aa5c5c9fbb2a9d0a1c9e2458a",
+    "model_tag": "model-v1.0.1"
   },
   "training": "one continuous 10,000-step random-initialization run per encoder",
   "encoders": {

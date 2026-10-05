@@ -8,8 +8,12 @@ from pathlib import Path
 
 
 HF_REPO_ID = "AIGNLAI/RouteFM"
-# Updated to the immutable Hub commit containing the RouteFM 1.0 artifacts.
-HF_REVISION = "b364300234794b0e6394453d224ddab7c94e41d0"
+# Immutable Hub commit containing the RouteFM 1.0 artifacts and repository index.
+HF_REVISION = "c9992e6bcfd11f0cb3e14033808d0e852fdc2c74"
+REPOSITORY_CONFIG = {
+    "path": "config.json",
+    "sha256": "fcceac6c349d0c1126310ea2e6b1fc6f5c581d3aa5c5c9fbb2a9d0a1c9e2458a",
+}
 
 ARTIFACTS = {
     "qwen": {
@@ -89,13 +93,17 @@ def resolve_checkpoint(
         "library_name": "routefm-router",
     }
     try:
+        repository_config = Path(
+            hf_hub_download(filename=REPOSITORY_CONFIG["path"], **common)
+        )
         weights = Path(hf_hub_download(filename=artifact["weights"], **common))
         config = Path(hf_hub_download(filename=artifact["config"], **common))
     except Exception as error:
         raise RuntimeError(
-            f"could not resolve RouteFM {encoder} artifacts from "
+            f"could not resolve RouteFM {encoder} artifacts and repository index from "
             f"{HF_REPO_ID}@{HF_REVISION}; pass --checkpoint for a local file"
         ) from error
+    _validate(repository_config, REPOSITORY_CONFIG["sha256"])
     _validate(weights, artifact["weights_sha256"])
     _validate(config, artifact["config_sha256"])
     return ResolvedCheckpoint(weights, config, f"hf://{HF_REPO_ID}@{HF_REVISION}")

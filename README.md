@@ -73,10 +73,13 @@ The canonical weights are hosted at
 the safetensors file from an immutable Hub revision, verifies its SHA-256
 digest, and reuses the standard Hugging Face cache.
 
+The repository-level [`config.json`](config.json) indexes both variants and is
+retrieved with each model resolution so Hugging Face can count real downloads.
+
 | Router | Query encoder | Dim. | Query modality | Parameters | Checkpoint |
 | --- | --- | ---: | --- | ---: | --- |
-| RouteFM-Qwen | Qwen3-VL-Embedding-8B | 4096 | Text + image | 12.8M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.0/qwen) |
-| RouteFM-BGE | BAAI/bge-base-en-v1.5 (CLS) | 768 | Text only | 11.1M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.0/bge) |
+| RouteFM-Qwen | Qwen3-VL-Embedding-8B | 4096 | Text + image | 12.8M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.1/qwen) |
+| RouteFM-BGE | BAAI/bge-base-en-v1.5 (CLS) | 768 | Text only | 11.1M | [Download](https://huggingface.co/AIGNLAI/RouteFM/tree/model-v1.0.1/bge) |
 
 The query encoders are frozen external feature extractors and are not bundled
 with RouteFM. Both routers were trained from random initialization in one

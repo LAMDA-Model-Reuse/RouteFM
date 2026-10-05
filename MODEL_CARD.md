@@ -1,7 +1,7 @@
 ---
 license: apache-2.0
-library_name: routefm
 tags:
+  - routefm
   - model-routing
   - llm-routing
   - multimodal-routing
@@ -61,6 +61,8 @@ Each variant contains a canonical `model.safetensors` and `config.json`.
 The `legacy/` directory contains the exact PyTorch checkpoint bytes from the
 GitHub v1.0.0 release. [`manifest.json`](manifest.json) records sizes,
 configurations, immutable revisions, and SHA-256 digests.
+The root [`config.json`](config.json) indexes both variants and is the standard
+Hugging Face query file used for repository download statistics.
 
 The query encoders are frozen external feature extractors. They are not
 included in this repository, and RouteFM is not a fine-tune of either encoder.

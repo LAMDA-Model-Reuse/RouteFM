@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "RouteFM",
+  "model_version": "1.0.0",
+  "library": "routefm-router",
+  "description": "Pretrained in-context model routing with Qwen and BGE query encoders",
+  "variants": {
+    "qwen": {
+      "config": "qwen/config.json",
+      "weights": "qwen/model.safetensors",
+      "embedding_dimension": 4096
+    },
+    "bge": {
+      "config": "bge/config.json",
+      "weights": "bge/model.safetensors",
+      "embedding_dimension": 768
+    }
+  }
+}

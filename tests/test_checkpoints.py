@@ -31,9 +31,11 @@ class CheckpointResolutionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             weights = root / "model.safetensors"
-            config = root / "config.json"
+            config = root / "variant-config.json"
+            repository_config = root / "repository-config.json"
             weights.write_bytes(b"weights")
             config.write_bytes(b"config")
+            repository_config.write_bytes(b"repository config")
             artifact = {
                 "weights": "qwen/model.safetensors",
                 "weights_sha256": hashlib.sha256(b"weights").hexdigest(),
@@ -44,15 +46,29 @@ class CheckpointResolutionTest(unittest.TestCase):
             def fake_download(*, filename: str, **kwargs) -> str:
                 self.assertEqual(kwargs["repo_id"], "test/RouteFM")
                 self.assertEqual(kwargs["revision"], "a" * 40)
-                return str(weights if filename.endswith(".safetensors") else config)
+                return str({
+                    "config.json": repository_config,
+                    "qwen/model.safetensors": weights,
+                    "qwen/config.json": config,
+                }[filename])
 
             with mock.patch.object(checkpoints, "HF_REPO_ID", "test/RouteFM"), mock.patch.object(
                 checkpoints, "HF_REVISION", "a" * 40
+            ), mock.patch.dict(
+                checkpoints.REPOSITORY_CONFIG,
+                {
+                    "path": "config.json",
+                    "sha256": hashlib.sha256(b"repository config").hexdigest(),
+                },
+                clear=True,
             ), mock.patch.dict(checkpoints.ARTIFACTS, {"qwen": artifact}, clear=True), mock.patch(
                 "huggingface_hub.hf_hub_download", side_effect=fake_download
             ) as download:
                 resolved = checkpoints.resolve_checkpoint("qwen")
-            self.assertEqual(download.call_count, 2)
+            self.assertEqual(
+                [call.kwargs["filename"] for call in download.call_args_list],
+                ["config.json", "qwen/model.safetensors", "qwen/config.json"],
+            )
             self.assertEqual(resolved.weights, weights)
             self.assertEqual(resolved.config, config)
 
@@ -67,6 +83,13 @@ class CheckpointResolutionTest(unittest.TestCase):
                 "config_sha256": "0" * 64,
             }
             with mock.patch.object(checkpoints, "HF_REVISION", "b" * 40), mock.patch.dict(
+                checkpoints.REPOSITORY_CONFIG,
+                {
+                    "path": "config.json",
+                    "sha256": hashlib.sha256(b"wrong").hexdigest(),
+                },
+                clear=True,
+            ), mock.patch.dict(
                 checkpoints.ARTIFACTS, {"bge": artifact}, clear=True
             ), mock.patch("huggingface_hub.hf_hub_download", return_value=str(path)):
                 with self.assertRaisesRegex(RuntimeError, "checksum mismatch"):
