@@ -21,11 +21,13 @@ RouteFM-BGE checkpoint. Change the environment, target query, and context
 budget to inspect how the frozen router compares anonymous candidates.
 
 The observations are synthetic illustrations rather than benchmark records.
-For arbitrary queries and custom candidate contexts, install
-`routefm-router[bge]` or run the full Gradio application from the
+For arbitrary queries and custom candidate contexts, use the
+[one-click Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb),
+install `routefm-router[bge]`, or run the full Gradio application from the
 [GitHub repository](https://github.com/LAMDA-Model-Reuse/RouteFM/tree/main/demo).
 
 - [Project page](https://lamda-model-reuse.github.io/RouteFM/)
+- [One-click Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb)
 - [Paper](https://arxiv.org/abs/2609.37362)
 - [Code](https://github.com/LAMDA-Model-Reuse/RouteFM)
 - [Model weights](https://huggingface.co/AIGNLAI/RouteFM)

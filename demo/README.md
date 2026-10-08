@@ -18,6 +18,7 @@ frozen, identity-free router uses a small behavioral context to select a
 candidate for a new query.
 
 - [Project page](https://lamda-model-reuse.github.io/RouteFM/)
+- [One-click Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb)
 - [Paper](https://arxiv.org/abs/2609.37362)
 - [Code](https://github.com/LAMDA-Model-Reuse/RouteFM)
 - [Model weights](https://huggingface.co/AIGNLAI/RouteFM)

@@ -6,5 +6,6 @@ dist/
 outputs/
 /data/
 .venv/
+.env.video
 
 weights/

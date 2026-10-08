@@ -21,6 +21,7 @@ tags:
 
 [Project page](https://lamda-model-reuse.github.io/RouteFM/) ·
 [Live demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo) ·
+[Run in Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb) ·
 [Routing collection](https://huggingface.co/collections/AIGNLAI/llm-routing-research-guannan-lai-6ac753db0a06781003fa245d) ·
 [GitHub](https://github.com/LAMDA-Model-Reuse/RouteFM) ·
 [Paper](https://arxiv.org/abs/2609.37362) ·
@@ -44,9 +45,10 @@ The [RouteFM demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)
 provides a free interactive explorer for switching among environments, target
 queries, and context budgets. Its predictions were precomputed with the
 released RouteFM-BGE checkpoint; the built-in behavioral contexts are
-synthetic illustrations, not benchmark records. For arbitrary target queries
-and custom context, run the full Gradio app in the
-[GitHub repository](https://github.com/LAMDA-Model-Reuse/RouteFM/tree/main/demo).
+synthetic illustrations, not benchmark records. For real inference with
+arbitrary target queries and custom context, use the
+[one-click Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb)
+or run the full Gradio app in the [GitHub repository](https://github.com/LAMDA-Model-Reuse/RouteFM/tree/main/demo).
 
 ## Model description
 

@@ -105,7 +105,7 @@ img { display: block; max-width: 100%; }
 .core-label { text-align: center; line-height: 1.2; }
 .core-label span { display: block; color: rgba(255,255,255,.5); font-family: var(--mono); font-size: 8px; letter-spacing: .15em; text-transform: uppercase; }
 .core-label strong { font-size: 17px; }
-.link-rail { display: grid; grid-template-columns: repeat(4, 1fr); max-width: var(--max); margin: 45px auto 0; border-top: 1px solid rgba(255,255,255,.12); border-left: 1px solid rgba(255,255,255,.12); }
+.link-rail { display: grid; grid-template-columns: repeat(5, 1fr); max-width: var(--max); margin: 45px auto 0; border-top: 1px solid rgba(255,255,255,.12); border-left: 1px solid rgba(255,255,255,.12); }
 .link-rail a { padding: 18px 20px; border-right: 1px solid rgba(255,255,255,.12); transition: background .2s; }
 .link-rail a:hover { background: rgba(255,255,255,.06); }
 .link-rail span, .link-rail strong { display: block; }
