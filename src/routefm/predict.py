@@ -43,17 +43,25 @@ def load_router(
     return model.to(device).eval()
 
 
-def prepare_episode(input_path: str | Path, dimension: int, device: str) -> dict:
-    with np.load(input_path, allow_pickle=False) as data:
-        required = {"context_embeddings", "context_scores", "context_costs", "target_embeddings"}
-        if not required.issubset(data.files):
-            raise ValueError(f"missing arrays: {sorted(required - set(data.files))}")
-        context = np.asarray(data["context_embeddings"], dtype=np.float32)
-        scores = np.asarray(data["context_scores"], dtype=np.float32)
-        costs = np.asarray(data["context_costs"], dtype=np.float32)
-        targets = np.asarray(data["target_embeddings"], dtype=np.float32)
-        mask = (np.asarray(data["context_mask"], dtype=bool)
-                if "context_mask" in data.files else np.ones(scores.shape, dtype=bool))
+def prepare_episode_arrays(
+    context_embeddings: np.ndarray,
+    context_scores: np.ndarray,
+    context_costs: np.ndarray,
+    target_embeddings: np.ndarray,
+    dimension: int,
+    device: str,
+    context_mask: np.ndarray | None = None,
+) -> dict[str, torch.Tensor]:
+    """Validate in-memory arrays and construct a single RouteFM episode."""
+    context = np.asarray(context_embeddings, dtype=np.float32)
+    scores = np.asarray(context_scores, dtype=np.float32)
+    costs = np.asarray(context_costs, dtype=np.float32)
+    targets = np.asarray(target_embeddings, dtype=np.float32)
+    mask = (
+        np.asarray(context_mask, dtype=bool)
+        if context_mask is not None
+        else np.ones(scores.shape, dtype=bool)
+    )
     if context.ndim != 3 or context.shape[-1] != dimension:
         raise ValueError(f"context_embeddings must be [M,K,{dimension}]")
     models, width, _ = context.shape
@@ -76,7 +84,7 @@ def prepare_episode(input_path: str | Path, dimension: int, device: str) -> dict
     normalized = (log_cost - low) / max(high - low, 1e-8)
     features = np.stack((np.where(mask, scores, 0.0),
                          np.where(mask, normalized, 0.0)), axis=-1).astype(np.float32)
-    context = np.where(mask[..., None], context, 0.0)
+    context = np.where(mask[..., None], context, 0.0).astype(np.float32, copy=False)
     return {
         "context_query": torch.from_numpy(context[None]).to(device),
         "context_features": torch.from_numpy(features[None]).to(device),
@@ -87,18 +95,37 @@ def prepare_episode(input_path: str | Path, dimension: int, device: str) -> dict
     }
 
 
+def prepare_episode(input_path: str | Path, dimension: int, device: str) -> dict:
+    """Load the legacy ``.npz`` interface and construct one RouteFM episode."""
+    with np.load(input_path, allow_pickle=False) as data:
+        required = {"context_embeddings", "context_scores", "context_costs", "target_embeddings"}
+        if not required.issubset(data.files):
+            raise ValueError(f"missing arrays: {sorted(required - set(data.files))}")
+        return prepare_episode_arrays(
+            context_embeddings=data["context_embeddings"],
+            context_scores=data["context_scores"],
+            context_costs=data["context_costs"],
+            target_embeddings=data["target_embeddings"],
+            context_mask=data["context_mask"] if "context_mask" in data.files else None,
+            dimension=dimension,
+            device=device,
+        )
+
+
 @torch.inference_mode()
-def predict(checkpoint: str | Path | ResolvedCheckpoint, input_path: str | Path,
-            device: str = "cpu", target_batch_size: int = 128,
-            model_names: list[str] | None = None,
-            expected_encoder: str | None = None) -> dict:
-    model = load_router(checkpoint, device, expected_encoder)
-    episode = prepare_episode(input_path, model.config.query_dim, device)
+def _predict_episode(
+    model: RouteFM,
+    episode: dict[str, torch.Tensor],
+    target_batch_size: int,
+    model_names: list[str] | None,
+) -> dict:
     candidates = episode["candidate_mask"].shape[1]
-    if model_names is not None and (len(model_names) != candidates or len(set(model_names)) != candidates):
+    if model_names is not None and (
+        len(model_names) != candidates or len(set(model_names)) != candidates
+    ):
         raise ValueError("model_names must list each candidate exactly once in Context row order")
     if target_batch_size < 1:
-        raise ValueError("target-batch-size must be positive")
+        raise ValueError("target_batch_size must be positive")
     score_parts, cost_parts = [], []
     targets = episode["target_query"].shape[1]
     for offset in range(0, targets, target_batch_size):
@@ -121,6 +148,40 @@ def predict(checkpoint: str | Path | ResolvedCheckpoint, input_path: str | Path,
         result["candidate_model_names"] = model_names
         result["chosen_model_name"] = [model_names[index] for index in choice]
     return result
+
+
+def predict_arrays(
+    model: RouteFM,
+    context_embeddings: np.ndarray,
+    context_scores: np.ndarray,
+    context_costs: np.ndarray,
+    target_embeddings: np.ndarray,
+    *,
+    context_mask: np.ndarray | None = None,
+    device: str = "cpu",
+    target_batch_size: int = 128,
+    model_names: list[str] | None = None,
+) -> dict:
+    """Run a loaded RouteFM model directly on NumPy-compatible arrays."""
+    episode = prepare_episode_arrays(
+        context_embeddings=context_embeddings,
+        context_scores=context_scores,
+        context_costs=context_costs,
+        target_embeddings=target_embeddings,
+        context_mask=context_mask,
+        dimension=model.config.query_dim,
+        device=device,
+    )
+    return _predict_episode(model, episode, target_batch_size, model_names)
+
+
+def predict(checkpoint: str | Path | ResolvedCheckpoint, input_path: str | Path,
+            device: str = "cpu", target_batch_size: int = 128,
+            model_names: list[str] | None = None,
+            expected_encoder: str | None = None) -> dict:
+    model = load_router(checkpoint, device, expected_encoder)
+    episode = prepare_episode(input_path, model.config.query_dim, device)
+    return _predict_episode(model, episode, target_batch_size, model_names)
 
 
 def main() -> None:

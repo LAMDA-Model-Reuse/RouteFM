@@ -8,6 +8,7 @@
 School of Artificial Intelligence & National Key Laboratory for Novel Software Technology, Nanjing University
 
 [![Paper](https://img.shields.io/badge/arXiv-2609.37362-b31b1b.svg)](https://arxiv.org/abs/2609.37362)
+[![PyPI](https://img.shields.io/pypi/v/routefm-router.svg)](https://pypi.org/project/routefm-router/)
 [![Models](https://img.shields.io/badge/%F0%9F%A4%97%20Models-RouteFM-FFD21E)](https://huggingface.co/AIGNLAI/RouteFM)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
@@ -91,32 +92,63 @@ encoder-specific vectors.
 RouteFM requires Python 3.10 or newer.
 
 ```bash
-git clone https://github.com/LAMDA-Model-Reuse/RouteFM.git
-cd RouteFM
-python -m pip install -e .
+# Text routing with the released BGE encoder and frozen RouteFM weights.
+python -m pip install "routefm-router[bge]"
 ```
 
-Optional dependencies and checkpoint prefetching:
+For development or paper reproduction, install from source:
 
 ```bash
-# Generate BGE embeddings locally.
+git clone https://github.com/LAMDA-Model-Reuse/RouteFM.git
+cd RouteFM
 python -m pip install -e '.[bge]'
+```
 
+Checkpoint prefetching:
+
+```bash
 # Download and verify both released routers for offline jobs.
 routefm-download --encoder all
 ```
 
 ## Quick start
 
-Prepare an episode following the documented
-[`.npz` schema](docs/CUSTOM_DATA.md), then route each target query:
+Use ordinary Python dictionaries to describe prior observations for each
+candidate. Candidate names label the output; they are not model features.
+
+```python
+from routefm import RouteFMRouter
+
+router = RouteFMRouter.from_pretrained(encoder="bge", device="cpu")
+router.set_context({
+    "small-model": [
+        {"query": "What is 2 + 2?", "score": 1.0, "cost": 0.01},
+        {"query": "Summarize this paragraph.", "score": 0.7, "cost": 0.02},
+    ],
+    "large-model": [
+        {"query": "What is 2 + 2?", "score": 1.0, "cost": 0.10},
+        {"query": "Summarize this paragraph.", "score": 0.95, "cost": 0.20},
+    ],
+})
+
+decision = router.route("Prove that there are infinitely many primes.")
+print(decision.model_name)
+print(decision.predicted_scores)
+```
+
+The first call downloads the immutable RouteFM-BGE checkpoint from Hugging
+Face and an immutable revision of the external BGE encoder. No RouteFM
+parameters are updated.
+
+For precomputed Qwen or BGE embeddings, use `router.predict_arrays(...)` or
+prepare an episode following the documented [`.npz` schema](docs/CUSTOM_DATA.md):
 
 ```bash
 routefm-predict --encoder qwen --input my_episode.npz \
   --output predictions.json --device cpu
 ```
 
-For text-only BGE embeddings:
+The file-based CLI remains available for text-only BGE embeddings:
 
 ```bash
 routefm-predict --encoder bge --input my_text_episode.npz \

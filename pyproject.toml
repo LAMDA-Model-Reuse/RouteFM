@@ -1,14 +1,36 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "routefm-router"
-version = "1.0.1"
+version = "1.1.0"
 description = "Pretrained in-context model routing with Qwen and BGE encoders"
+readme = "PYPI.md"
 requires-python = ">=3.10"
-license = {text = "Apache-2.0"}
-classifiers = ["License :: OSI Approved :: Apache Software License"]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [
+  {name = "Guannan Lai"},
+  {name = "Han-Jia Ye"},
+]
+keywords = [
+  "foundation model",
+  "language model routing",
+  "LLM routing",
+  "model selection",
+  "multimodal routing",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 dependencies = [
   "torch>=2.1",
   "numpy>=1.24",
@@ -19,13 +41,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-bge = ["transformers>=4.40"]
+bge = ["transformers>=4.40,<6"]
 
 [project.urls]
 Homepage = "https://github.com/LAMDA-Model-Reuse/RouteFM"
 Paper = "https://arxiv.org/abs/2609.37362"
 Models = "https://huggingface.co/AIGNLAI/RouteFM"
 Issues = "https://github.com/LAMDA-Model-Reuse/RouteFM/issues"
+Changelog = "https://github.com/LAMDA-Model-Reuse/RouteFM/releases"
 
 [tool.setuptools.packages.find]
 where = ["src"]

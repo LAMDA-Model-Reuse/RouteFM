@@ -7,6 +7,32 @@ observed Context outcome. Context scores should use a comparable [0,1]
 quality scale across candidates; costs must be nonnegative and use one
 consistent unit within the episode.
 
+## Python API
+
+For BGE text routing, the high-level API accepts observations as ordinary
+Python values and keeps the encoded Context in memory:
+
+```python
+from routefm import RouteFMRouter
+
+router = RouteFMRouter.from_pretrained("bge")
+router.set_context({
+    "candidate-a": [
+        {"query": "an observed query", "score": 0.8, "cost": 0.1},
+    ],
+    "candidate-b": [
+        {"query": "another observed query", "score": 0.9, "cost": 0.5},
+    ],
+})
+decision = router.route("a new target query")
+print(decision.to_dict())
+```
+
+For Qwen multimodal vectors or an existing embedding pipeline, call
+`RouteFMRouter.predict_arrays(...)` with the five arrays described below.
+
+## File and array schema
+
 Store a NumPy `.npz` archive with these arrays:
 
 | Key | Shape | Meaning |
