@@ -1,5 +1,8 @@
 ---
 license: apache-2.0
+library_name: routefm-router
+spaces:
+  - AIGNLAI/RouteFM-Demo
 tags:
   - routefm
   - model-routing
@@ -16,6 +19,8 @@ tags:
 > **[Pretrain Once, Route Anywhere: Towards a Foundation Model for LLM Routing](https://arxiv.org/abs/2609.37362)**<br>
 > Guannan Lai and Han-Jia Ye · Nanjing University
 
+[Project page](https://lamda-model-reuse.github.io/RouteFM/) ·
+[Live demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo) ·
 [GitHub](https://github.com/LAMDA-Model-Reuse/RouteFM) ·
 [Paper](https://arxiv.org/abs/2609.37362) ·
 [PDF](https://arxiv.org/pdf/2609.37362)
@@ -71,10 +76,10 @@ and comply with their licenses and access terms.
 
 ## Usage
 
-Install the official package directly from GitHub:
+Install the official package from PyPI:
 
 ```bash
-python -m pip install git+https://github.com/LAMDA-Model-Reuse/RouteFM.git
+python -m pip install "routefm-router[bge]"
 ```
 
 The package downloads the correct safetensors checkpoint from the immutable

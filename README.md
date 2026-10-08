@@ -8,6 +8,8 @@
 School of Artificial Intelligence & National Key Laboratory for Novel Software Technology, Nanjing University
 
 [![Paper](https://img.shields.io/badge/arXiv-2609.37362-b31b1b.svg)](https://arxiv.org/abs/2609.37362)
+[![Website](https://img.shields.io/badge/Project-Website-605BF6.svg)](https://lamda-model-reuse.github.io/RouteFM/)
+[![Demo](https://img.shields.io/badge/%F0%9F%A4%97-Live%20Demo-D8F35A.svg)](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)
 [![PyPI](https://img.shields.io/pypi/v/routefm-router.svg)](https://pypi.org/project/routefm-router/)
 [![Models](https://img.shields.io/badge/%F0%9F%A4%97%20Models-RouteFM-FFD21E)](https://huggingface.co/AIGNLAI/RouteFM)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
@@ -23,6 +25,7 @@ candidate pools, and deployment conditions through behavioral context alone.**
 
 ## News
 
+- **2026-10-08:** The [project page](https://lamda-model-reuse.github.io/RouteFM/) and [interactive RouteFM-BGE demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo) are available.
 - **2026-09-29:** The [RouteFM paper](https://arxiv.org/abs/2609.37362) is available on arXiv.
 - **2026-09-29:** Code, frozen checkpoints, training configurations, and evaluation protocols are publicly released.
 
@@ -139,6 +142,11 @@ print(decision.predicted_scores)
 The first call downloads the immutable RouteFM-BGE checkpoint from Hugging
 Face and an immutable revision of the external BGE encoder. No RouteFM
 parameters are updated.
+
+To explore the behavioral-context interface before installing anything, use
+the [live RouteFM-BGE demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo).
+Its built-in contexts are synthetic illustrations rather than benchmark
+records, and it does not invoke candidate LLMs.
 
 For precomputed Qwen or BGE embeddings, use `router.predict_arrays(...)` or
 prepare an episode following the documented [`.npz` schema](docs/CUSTOM_DATA.md):

@@ -1,6 +1,8 @@
 # RouteFM
 
 [![Paper](https://img.shields.io/badge/arXiv-2609.37362-b31b1b.svg)](https://arxiv.org/abs/2609.37362)
+[![Website](https://img.shields.io/badge/Project-Website-605BF6.svg)](https://lamda-model-reuse.github.io/RouteFM/)
+[![Demo](https://img.shields.io/badge/%F0%9F%A4%97-Live%20Demo-D8F35A.svg)](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)
 [![Models](https://img.shields.io/badge/Hugging%20Face-RouteFM-FFD21E.svg)](https://huggingface.co/AIGNLAI/RouteFM)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/LAMDA-Model-Reuse/RouteFM/blob/main/LICENSE)
 
@@ -59,6 +61,8 @@ For precomputed BGE or Qwen multimodal embeddings, use
 
 ## Resources
 
+- [Project page](https://lamda-model-reuse.github.io/RouteFM/)
+- [Interactive RouteFM-BGE demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)
 - [Paper](https://arxiv.org/abs/2609.37362)
 - [Source and documentation](https://github.com/LAMDA-Model-Reuse/RouteFM)
 - [Frozen checkpoints and model card](https://huggingface.co/AIGNLAI/RouteFM)

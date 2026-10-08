@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07111f">
+    <meta name="description" content="RouteFM is a foundation model for LLM routing that adapts to unseen tasks and candidate pools through behavioral context alone.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="RouteFM — Pretrain Once, Route Anywhere">
+    <meta property="og:description" content="A frozen, identity-free router that adapts through behavioral context.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/LAMDA-Model-Reuse/RouteFM/main/assets/intro_new.png">
+    <meta property="og:url" content="https://lamda-model-reuse.github.io/RouteFM/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="citation_title" content="Pretrain Once, Route Anywhere: Towards a Foundation Model for LLM Routing">
+    <meta name="citation_author" content="Guannan Lai">
+    <meta name="citation_author" content="Han-Jia Ye">
+    <meta name="citation_publication_date" content="2026/09/29">
+    <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2609.37362">
+    <title>RouteFM — Pretrain Once, Route Anywhere</title>
+    <link rel="canonical" href="https://lamda-model-reuse.github.io/RouteFM/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="RouteFM home">
+        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>RouteFM</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#demo">Demo</a>
+        <a href="#start">Use RouteFM</a>
+      </nav>
+      <a class="nav-github" href="https://github.com/LAMDA-Model-Reuse/RouteFM">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="eyebrow"><span></span> Foundation model for LLM routing</div>
+        <h1>Pretrain once.<br><em>Route anywhere.</em></h1>
+        <p class="hero-copy">RouteFM learns a reusable routing capability across heterogeneous environments, then adapts to unseen tasks and candidate pools from a few behavioral observations—without retraining.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://arxiv.org/abs/2609.37362">Read the paper <span aria-hidden="true">↗</span></a>
+          <a class="button button-secondary" href="#demo">Try the live demo <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="paper-meta">
+          <p><strong>Guannan Lai</strong> · <strong>Han-Jia Ye</strong></p>
+          <p>Nanjing University · LAMDA</p>
+        </div>
+
+        <div class="hero-visual" aria-label="RouteFM adapts one frozen router to changing candidate pools through behavioral context">
+          <div class="environment environment-left">
+            <span class="environment-label">Environment 01</span>
+            <div class="candidate-row"><i class="candidate a"></i><i class="candidate b"></i><i class="candidate c"></i></div>
+            <div class="task-lines"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="route-core">
+            <div class="core-orbit orbit-one"></div>
+            <div class="core-orbit orbit-two"></div>
+            <div class="core-label"><span>frozen</span><strong>RouteFM</strong></div>
+          </div>
+          <div class="environment environment-right">
+            <span class="environment-label">Unseen environment</span>
+            <div class="candidate-row"><i class="candidate d"></i><i class="candidate e"></i><i class="candidate f"></i><i class="candidate g"></i></div>
+            <div class="task-lines"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <svg class="route-lines" viewBox="0 0 1000 270" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M240 74 C360 74 370 135 465 135" />
+            <path d="M240 196 C350 196 385 135 465 135" />
+            <path d="M535 135 C650 135 675 73 765 73" />
+            <path d="M535 135 C650 135 675 197 765 197" />
+          </svg>
+        </div>
+
+        <div class="link-rail" aria-label="Project resources">
+          <a href="https://arxiv.org/abs/2609.37362"><span>Paper</span><strong>arXiv:2609.37362</strong></a>
+          <a href="https://github.com/LAMDA-Model-Reuse/RouteFM"><span>Code</span><strong>GitHub</strong></a>
+          <a href="https://huggingface.co/AIGNLAI/RouteFM"><span>Models</span><strong>Hugging Face</strong></a>
+          <a href="https://pypi.org/project/routefm-router/"><span>Package</span><strong>routefm-router</strong></a>
+        </div>
+      </section>
+
+      <section class="section thesis" id="overview">
+        <div class="section-index">01 / Motivation</div>
+        <div class="thesis-grid">
+          <h2>Routing should transfer,<br>not restart.</h2>
+          <div>
+            <p class="large-copy">Conventional routers are fitted to one workload and one fixed candidate pool. When the environment changes, routing starts over.</p>
+            <p>RouteFM turns model routing into an in-context adaptation problem. It characterizes anonymous candidates using observed query, quality, and relative-cost tuples, and transfers one frozen router across domains, modalities, candidate pools, and context budgets.</p>
+          </div>
+        </div>
+        <figure class="paper-figure">
+          <img src="assets/intro_new.png" alt="Comparison between task-specific routing and RouteFM's global routing pretraining approach" loading="lazy">
+          <figcaption>From local router fitting to global routing pretraining.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section method" id="method">
+        <div class="section-index">02 / Method</div>
+        <div class="section-heading">
+          <h2>Behavior is the interface.</h2>
+          <p>Candidate names label the output; they are never used as model features. RouteFM reasons from evidence instead.</p>
+        </div>
+        <div class="steps">
+          <article>
+            <span class="step-number">01</span>
+            <div class="step-icon observation-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+            <h3>Observe</h3>
+            <p>Collect a small context of queries, outcome quality, and relative cost for every candidate.</p>
+          </article>
+          <article>
+            <span class="step-number">02</span>
+            <div class="step-icon profile-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <h3>Characterize</h3>
+            <p>Compress behavioral evidence into capability profiles while retaining fine-grained context.</p>
+          </article>
+          <article>
+            <span class="step-number">03</span>
+            <div class="step-icon compare-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+            <h3>Compare</h3>
+            <p>Jointly compare the current candidate pool with a permutation-equivariant Transformer.</p>
+          </article>
+          <article>
+            <span class="step-number">04</span>
+            <div class="step-icon route-icon" aria-hidden="true"><i></i><i></i></div>
+            <h3>Route</h3>
+            <p>Predict target-specific quality and cost, then select the candidate for the new query.</p>
+          </article>
+        </div>
+        <figure class="paper-figure figure-dark">
+          <img src="assets/method.png" alt="RouteFM architecture with capability profiles, context retrieval, and candidate-pool Transformer" loading="lazy">
+          <figcaption>RouteFM architecture. See the paper for the full training objective and implementation details.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section results" id="results">
+        <div class="section-index">03 / Evidence</div>
+        <div class="section-heading result-heading">
+          <h2>A frozen router,<br>outside its training world.</h2>
+          <p>On MMR-Bench, excluded entirely from pretraining, RouteFM transfers across modality, task, and candidate-pool shifts.</p>
+        </div>
+        <div class="result-grid">
+          <article class="metric-card primary-metric">
+            <span>RouteFM · K=8</span>
+            <strong>0.7323</strong>
+            <div class="metric-bar"><i style="--value: 73.23%"></i></div>
+            <small>MMR-Bench quality</small>
+          </article>
+          <article class="metric-card">
+            <span>Strongest non-RouteFM baseline</span>
+            <strong>0.7100</strong>
+            <div class="metric-bar"><i style="--value: 71%"></i></div>
+            <small>Same K=8 setting</small>
+          </article>
+          <article class="metric-card delta-card">
+            <span>Absolute gain</span>
+            <strong>+2.23</strong>
+            <small>quality points with eight observations per candidate</small>
+          </article>
+        </div>
+        <p class="result-note">Results use the paper's dataset-wise five-fold evaluation protocol. Please consult the paper for baselines, uncertainty, and complete experimental settings.</p>
+      </section>
+
+      <section class="section demo" id="demo">
+        <div class="section-index">04 / Live demo</div>
+        <div class="section-heading">
+          <h2>Give it context.<br>Watch it route.</h2>
+          <p>Choose an environment, vary the observation budget, and route a new query. The candidates remain anonymous—their behavior is all RouteFM sees.</p>
+        </div>
+        <div class="demo-frame-wrap">
+          <div class="demo-toolbar">
+            <div><i class="status-dot"></i> RouteFM-BGE · CPU</div>
+            <a href="https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo">Open full screen <span aria-hidden="true">↗</span></a>
+          </div>
+          <iframe
+            title="RouteFM interactive demo"
+            src="https://aignlai-routefm-demo.hf.space?__theme=light"
+            loading="lazy"
+            allow="clipboard-read; clipboard-write"
+          ></iframe>
+          <noscript><p class="demo-fallback">JavaScript is disabled. <a href="https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo">Open the demo on Hugging Face</a>.</p></noscript>
+        </div>
+        <p class="demo-note">The demo uses synthetic, illustrative behavioral contexts—not benchmark records or live provider outputs. Predictions come from the released frozen RouteFM-BGE checkpoint.</p>
+      </section>
+
+      <section class="section start" id="start">
+        <div class="section-index">05 / Get started</div>
+        <div class="start-grid">
+          <div>
+            <h2>Route in a few lines.</h2>
+            <p>Install the published Python package. The first run downloads the immutable RouteFM-BGE checkpoint and its frozen query encoder.</p>
+            <div class="start-links">
+              <a href="https://pypi.org/project/routefm-router/">PyPI <span>↗</span></a>
+              <a href="https://github.com/LAMDA-Model-Reuse/RouteFM#quick-start">Documentation <span>↗</span></a>
+            </div>
+          </div>
+          <div class="terminal">
+            <div class="terminal-top"><i></i><i></i><i></i><span>quickstart.py</span></div>
+            <pre><code><span class="code-muted">$</span> pip install <span class="code-accent">"routefm-router[bge]"</span>
+
+<span class="code-keyword">from</span> routefm <span class="code-keyword">import</span> RouteFMRouter
+
+router = RouteFMRouter.from_pretrained(
+    encoder=<span class="code-string">"bge"</span>, device=<span class="code-string">"cpu"</span>
+)
+router.set_context(candidates)
+
+decision = router.route(
+    <span class="code-string">"Prove there are infinitely many primes."</span>
+)
+<span class="code-keyword">print</span>(decision.model_name)</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section citation" id="citation">
+        <div class="section-index">06 / Cite</div>
+        <div class="citation-grid">
+          <div>
+            <h2>Build on RouteFM.</h2>
+            <p>If RouteFM supports your research, please cite our paper.</p>
+          </div>
+          <div class="bibtex-wrap">
+            <button class="copy-button" type="button" data-copy-target="bibtex">Copy BibTeX</button>
+            <pre id="bibtex"><code>@misc{lai2026pretrainoncerouteanywhere,
+  title  = {Pretrain Once, Route Anywhere: Towards a
+            Foundation Model for LLM Routing},
+  author = {Guannan Lai and Han-Jia Ye},
+  year   = {2026},
+  eprint = {2609.37362},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
+}</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wordmark"><span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>RouteFM</span></div>
+      <p>Released under the Apache License 2.0.</p>
+      <div><a href="https://arxiv.org/abs/2609.37362">Paper</a><a href="https://github.com/LAMDA-Model-Reuse/RouteFM">GitHub</a><a href="https://huggingface.co/AIGNLAI/RouteFM">Models</a></div>
+    </footer>
+  </body>
+</html>

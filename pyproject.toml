@@ -44,9 +44,11 @@ dependencies = [
 bge = ["transformers>=4.40,<6"]
 
 [project.urls]
-Homepage = "https://github.com/LAMDA-Model-Reuse/RouteFM"
+Homepage = "https://lamda-model-reuse.github.io/RouteFM/"
 Paper = "https://arxiv.org/abs/2609.37362"
 Models = "https://huggingface.co/AIGNLAI/RouteFM"
+Demo = "https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo"
+Source = "https://github.com/LAMDA-Model-Reuse/RouteFM"
 Issues = "https://github.com/LAMDA-Model-Reuse/RouteFM/issues"
 Changelog = "https://github.com/LAMDA-Model-Reuse/RouteFM/releases"
 
