@@ -11,7 +11,7 @@ models:
   - AIGNLAI/RouteFM
 tags:
   - arxiv:2609.37362
-short_description: Explore identity-free RouteFM routing across environments and context budgets.
+short_description: Explore identity-free RouteFM routing across contexts.
 ---
 
 # RouteFM interactive result explorer
