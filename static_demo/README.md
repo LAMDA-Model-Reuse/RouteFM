@@ -9,6 +9,9 @@ pinned: true
 license: apache-2.0
 models:
   - AIGNLAI/RouteFM
+tags:
+  - arxiv:2609.37362
+short_description: Explore identity-free RouteFM routing across environments and context budgets.
 ---
 
 # RouteFM interactive result explorer
