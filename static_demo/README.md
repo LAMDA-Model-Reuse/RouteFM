@@ -29,3 +29,4 @@ For arbitrary queries and custom candidate contexts, install
 - [Paper](https://arxiv.org/abs/2609.37362)
 - [Code](https://github.com/LAMDA-Model-Reuse/RouteFM)
 - [Model weights](https://huggingface.co/AIGNLAI/RouteFM)
+- [LLM routing research collection](https://huggingface.co/collections/AIGNLAI/llm-routing-research-guannan-lai-6ac753db0a06781003fa245d)

@@ -21,6 +21,7 @@ tags:
 
 [Project page](https://lamda-model-reuse.github.io/RouteFM/) ·
 [Live demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo) ·
+[Routing collection](https://huggingface.co/collections/AIGNLAI/llm-routing-research-guannan-lai-6ac753db0a06781003fa245d) ·
 [GitHub](https://github.com/LAMDA-Model-Reuse/RouteFM) ·
 [Paper](https://arxiv.org/abs/2609.37362) ·
 [PDF](https://arxiv.org/pdf/2609.37362)
