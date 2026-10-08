@@ -10,7 +10,7 @@ Preview the exact Pages artifact locally from the repository root:
 python3 -m http.server --directory /tmp/routefm-site 8000
 ```
 
-The live demo is embedded from
+The free static result explorer is embedded from
 <https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo>. The page remains useful
 if the Space is sleeping or unavailable because all paper and package links are
 ordinary static HTML.

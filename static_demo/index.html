@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore RouteFM-BGE routing predictions across anonymous candidate pools and context budgets.">
+  <title>RouteFM Interactive Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="brand"><span class="mark"><i></i><i></i><i></i></span> RouteFM</div>
+      <div class="tag">INTERACTIVE ROUTING LAB</div>
+      <h1>Give it context.<br><em>Watch it route.</em></h1>
+      <p>Explore how a frozen, identity-free router compares anonymous candidates using only behavioral observations.</p>
+      <div class="hero-links"><a href="https://lamda-model-reuse.github.io/RouteFM/" target="_blank">Project page ↗</a><a href="https://arxiv.org/abs/2609.37362" target="_blank">Paper ↗</a><a href="https://github.com/LAMDA-Model-Reuse/RouteFM" target="_blank">Code ↗</a></div>
+    </header>
+
+    <section class="lab">
+      <div class="controls">
+        <label><span>01</span> Environment<select id="environment"></select></label>
+        <label><span>02</span> Target query<select id="target"></select></label>
+        <fieldset><legend><span>03</span> Observations per candidate</legend><div id="budgets" class="segments"></div></fieldset>
+        <label class="toggle"><input id="reveal" type="checkbox"><i></i><span>Reveal descriptive candidate labels</span></label>
+      </div>
+
+      <div class="decision">
+        <div><small>ROUTED TO</small><h2 id="choice">—</h2></div>
+        <p>Highest predicted quality<br><span id="context-summary">—</span></p>
+      </div>
+      <div id="candidate-grid" class="candidate-grid" aria-live="polite"></div>
+      <p class="decision-rule">RouteFM predicts quality and relative cost jointly. The released default rule selects the highest predicted quality; cost is displayed but is not used for selection.</p>
+
+      <details>
+        <summary>Inspect the behavioral context <span>synthetic illustration</span></summary>
+        <div class="table-scroll"><table><thead id="context-head"></thead><tbody id="context-body"></tbody></table></div>
+      </details>
+    </section>
+
+    <aside class="provenance">
+      <strong>What is running here?</strong>
+      <p>These predictions were precomputed with the published RouteFM-BGE checkpoint and its pinned BGE encoder. The browser only switches between verified outputs; it does not run the neural model or call candidate LLMs. Built-in contexts are synthetic—not benchmark samples or reported results.</p>
+      <a href="https://github.com/LAMDA-Model-Reuse/RouteFM/tree/main/demo" target="_blank">Run arbitrary queries with the full Gradio app ↗</a>
+    </aside>
+  </main>
+</body>
+</html>

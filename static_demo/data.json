@@ -1,0 +1,949 @@
+{
+  "metadata": {
+    "model": "AIGNLAI/RouteFM",
+    "variant": "RouteFM-BGE",
+    "generated": "2026-10-08",
+    "decision_rule": "highest predicted quality"
+  },
+  "environments": {
+    "Mixed assistant": {
+      "labels": [
+        "Fast generalist",
+        "Reasoning specialist",
+        "Code specialist",
+        "Broad premium model"
+      ],
+      "targets": [
+        "Prove that there are infinitely many prime numbers.",
+        "Write a Python function that detects a cycle in a linked list.",
+        "Summarize why central banks raise interest rates."
+      ],
+      "observations": [
+        {
+          "query": "Summarize the causes of the 2008 financial crisis.",
+          "scores": [
+            0.76,
+            0.8,
+            0.62,
+            0.91
+          ],
+          "costs": [
+            0.08,
+            0.38,
+            0.22,
+            0.92
+          ]
+        },
+        {
+          "query": "Solve: if 3x + 7 = 25, find x.",
+          "scores": [
+            0.88,
+            0.98,
+            0.7,
+            0.98
+          ],
+          "costs": [
+            0.06,
+            0.34,
+            0.2,
+            0.88
+          ]
+        },
+        {
+          "query": "Write a Python function for binary search.",
+          "scores": [
+            0.71,
+            0.75,
+            0.98,
+            0.94
+          ],
+          "costs": [
+            0.09,
+            0.4,
+            0.24,
+            0.95
+          ]
+        },
+        {
+          "query": "Explain why the sky appears blue.",
+          "scores": [
+            0.84,
+            0.89,
+            0.72,
+            0.95
+          ],
+          "costs": [
+            0.07,
+            0.36,
+            0.21,
+            0.9
+          ]
+        },
+        {
+          "query": "Find the derivative of x^3 sin(x).",
+          "scores": [
+            0.72,
+            0.97,
+            0.78,
+            0.98
+          ],
+          "costs": [
+            0.07,
+            0.36,
+            0.22,
+            0.91
+          ]
+        },
+        {
+          "query": "Debug a race condition in a producer-consumer queue.",
+          "scores": [
+            0.52,
+            0.7,
+            0.96,
+            0.93
+          ],
+          "costs": [
+            0.1,
+            0.44,
+            0.27,
+            1.0
+          ]
+        },
+        {
+          "query": "Draft a concise, polite meeting follow-up email.",
+          "scores": [
+            0.91,
+            0.84,
+            0.69,
+            0.94
+          ],
+          "costs": [
+            0.06,
+            0.35,
+            0.2,
+            0.87
+          ]
+        },
+        {
+          "query": "Compare utilitarian and deontological ethics.",
+          "scores": [
+            0.74,
+            0.86,
+            0.6,
+            0.95
+          ],
+          "costs": [
+            0.08,
+            0.4,
+            0.23,
+            0.96
+          ]
+        }
+      ],
+      "results": {
+        "1": {
+          "Prove that there are infinitely many prime numbers.": {
+            "scores": [
+              0.667375,
+              0.656326,
+              0.516431,
+              0.659776
+            ],
+            "costs": [
+              0.004872,
+              0.446137,
+              0.21559,
+              0.995686
+            ]
+          },
+          "Write a Python function that detects a cycle in a linked list.": {
+            "scores": [
+              0.676074,
+              0.66031,
+              0.522465,
+              0.678448
+            ],
+            "costs": [
+              0.003838,
+              0.450465,
+              0.212846,
+              0.997898
+            ]
+          },
+          "Summarize why central banks raise interest rates.": {
+            "scores": [
+              0.699272,
+              0.695189,
+              0.556412,
+              0.734275
+            ],
+            "costs": [
+              0.006899,
+              0.432701,
+              0.205496,
+              0.989484
+            ]
+          }
+        },
+        "2": {
+          "Prove that there are infinitely many prime numbers.": {
+            "scores": [
+              0.806474,
+              0.803025,
+              0.66041,
+              0.867265
+            ],
+            "costs": [
+              0.008523,
+              0.463336,
+              0.244551,
+              0.99627
+            ]
+          },
+          "Write a Python function that detects a cycle in a linked list.": {
+            "scores": [
+              0.766002,
+              0.759045,
+              0.598895,
+              0.809539
+            ],
+            "costs": [
+              0.006489,
+              0.473461,
+              0.237322,
+              0.998044
+            ]
+          },
+          "Summarize why central banks raise interest rates.": {
+            "scores": [
+              0.786349,
+              0.794305,
+              0.648763,
+              0.85108
+            ],
+            "costs": [
+              0.013359,
+              0.442022,
+              0.226772,
+              0.987798
+            ]
+          }
+        },
+        "4": {
+          "Prove that there are infinitely many prime numbers.": {
+            "scores": [
+              0.773143,
+              0.786322,
+              0.707576,
+              0.878324
+            ],
+            "costs": [
+              0.011121,
+              0.439424,
+              0.244322,
+              0.989894
+            ]
+          },
+          "Write a Python function that detects a cycle in a linked list.": {
+            "scores": [
+              0.739638,
+              0.749146,
+              0.658261,
+              0.833592
+            ],
+            "costs": [
+              0.009279,
+              0.444506,
+              0.236263,
+              0.994565
+            ]
+          },
+          "Summarize why central banks raise interest rates.": {
+            "scores": [
+              0.759141,
+              0.7774,
+              0.699743,
+              0.856374
+            ],
+            "costs": [
+              0.015144,
+              0.417097,
+              0.227875,
+              0.973442
+            ]
+          }
+        },
+        "8": {
+          "Prove that there are infinitely many prime numbers.": {
+            "scores": [
+              0.745895,
+              0.78364,
+              0.71052,
+              0.877732
+            ],
+            "costs": [
+              0.01073,
+              0.43489,
+              0.243509,
+              0.979881
+            ]
+          },
+          "Write a Python function that detects a cycle in a linked list.": {
+            "scores": [
+              0.708488,
+              0.73969,
+              0.656396,
+              0.822966
+            ],
+            "costs": [
+              0.008868,
+              0.442539,
+              0.233958,
+              0.988558
+            ]
+          },
+          "Summarize why central banks raise interest rates.": {
+            "scores": [
+              0.737027,
+              0.775725,
+              0.69964,
+              0.855436
+            ],
+            "costs": [
+              0.014929,
+              0.413021,
+              0.223472,
+              0.953597
+            ]
+          }
+        }
+      }
+    },
+    "Reasoning lab": {
+      "labels": [
+        "Compact solver",
+        "Symbolic reasoner",
+        "Fast chat model",
+        "Large reasoner"
+      ],
+      "targets": [
+        "A fair coin is tossed until two consecutive heads appear. What is the expected number of tosses?",
+        "Prove that the square root of 3 is irrational.",
+        "A bag has 3 red and 2 blue balls. Draw two without replacement: what is the probability both are red?"
+      ],
+      "observations": [
+        {
+          "query": "Prove that sqrt(2) is irrational.",
+          "scores": [
+            0.63,
+            0.96,
+            0.51,
+            0.98
+          ],
+          "costs": [
+            0.09,
+            0.46,
+            0.05,
+            1.0
+          ]
+        },
+        {
+          "query": "Compute the eigenvalues of [[2,1],[1,2]].",
+          "scores": [
+            0.78,
+            0.97,
+            0.59,
+            0.97
+          ],
+          "costs": [
+            0.08,
+            0.43,
+            0.05,
+            0.96
+          ]
+        },
+        {
+          "query": "Solve the recurrence a_n = 2a_(n-1) + 1.",
+          "scores": [
+            0.76,
+            0.95,
+            0.56,
+            0.98
+          ],
+          "costs": [
+            0.08,
+            0.42,
+            0.05,
+            0.98
+          ]
+        },
+        {
+          "query": "Is every continuous function differentiable? Explain.",
+          "scores": [
+            0.89,
+            0.94,
+            0.88,
+            0.96
+          ],
+          "costs": [
+            0.07,
+            0.39,
+            0.04,
+            0.92
+          ]
+        },
+        {
+          "query": "Derive Bayes' rule from conditional probability.",
+          "scores": [
+            0.81,
+            0.96,
+            0.68,
+            0.98
+          ],
+          "costs": [
+            0.09,
+            0.45,
+            0.05,
+            1.0
+          ]
+        },
+        {
+          "query": "Find a counterexample to the converse of Lagrange's theorem.",
+          "scores": [
+            0.48,
+            0.91,
+            0.34,
+            0.95
+          ],
+          "costs": [
+            0.1,
+            0.49,
+            0.06,
+            1.05
+          ]
+        },
+        {
+          "query": "Calculate 17 \u00d7 24.",
+          "scores": [
+            0.99,
+            1.0,
+            0.98,
+            1.0
+          ],
+          "costs": [
+            0.04,
+            0.27,
+            0.03,
+            0.7
+          ]
+        },
+        {
+          "query": "Explain the intuition behind the central limit theorem.",
+          "scores": [
+            0.75,
+            0.93,
+            0.73,
+            0.97
+          ],
+          "costs": [
+            0.08,
+            0.43,
+            0.05,
+            0.97
+          ]
+        }
+      ],
+      "results": {
+        "1": {
+          "A fair coin is tossed until two consecutive heads appear. What is the expected number of tosses?": {
+            "scores": [
+              0.781441,
+              0.942002,
+              0.717515,
+              0.965873
+            ],
+            "costs": [
+              0.055472,
+              0.490654,
+              0.003168,
+              0.997574
+            ]
+          },
+          "Prove that the square root of 3 is irrational.": {
+            "scores": [
+              0.753918,
+              0.920226,
+              0.690492,
+              0.955833
+            ],
+            "costs": [
+              0.067144,
+              0.521876,
+              0.005038,
+              0.997622
+            ]
+          },
+          "A bag has 3 red and 2 blue balls. Draw two without replacement: what is the probability both are red?": {
+            "scores": [
+              0.786894,
+              0.953961,
+              0.718005,
+              0.967666
+            ],
+            "costs": [
+              0.061722,
+              0.501817,
+              0.003761,
+              0.998266
+            ]
+          }
+        },
+        "2": {
+          "A fair coin is tossed until two consecutive heads appear. What is the expected number of tosses?": {
+            "scores": [
+              0.802555,
+              0.92054,
+              0.724213,
+              0.961728
+            ],
+            "costs": [
+              0.029627,
+              0.438155,
+              0.003822,
+              0.990435
+            ]
+          },
+          "Prove that the square root of 3 is irrational.": {
+            "scores": [
+              0.770203,
+              0.891977,
+              0.698687,
+              0.934055
+            ],
+            "costs": [
+              0.040655,
+              0.465969,
+              0.005898,
+              0.985316
+            ]
+          },
+          "A bag has 3 red and 2 blue balls. Draw two without replacement: what is the probability both are red?": {
+            "scores": [
+              0.805346,
+              0.931305,
+              0.724292,
+              0.966976
+            ],
+            "costs": [
+              0.035021,
+              0.456798,
+              0.004539,
+              0.994985
+            ]
+          }
+        },
+        "4": {
+          "A fair coin is tossed until two consecutive heads appear. What is the expected number of tosses?": {
+            "scores": [
+              0.824384,
+              0.903251,
+              0.761194,
+              0.952898
+            ],
+            "costs": [
+              0.026932,
+              0.435684,
+              0.004855,
+              0.989402
+            ]
+          },
+          "Prove that the square root of 3 is irrational.": {
+            "scores": [
+              0.778679,
+              0.866618,
+              0.724371,
+              0.912813
+            ],
+            "costs": [
+              0.039284,
+              0.464181,
+              0.007949,
+              0.983593
+            ]
+          },
+          "A bag has 3 red and 2 blue balls. Draw two without replacement: what is the probability both are red?": {
+            "scores": [
+              0.827386,
+              0.913495,
+              0.764752,
+              0.95937
+            ],
+            "costs": [
+              0.033656,
+              0.457388,
+              0.006077,
+              0.994683
+            ]
+          }
+        },
+        "8": {
+          "A fair coin is tossed until two consecutive heads appear. What is the expected number of tosses?": {
+            "scores": [
+              0.834445,
+              0.92848,
+              0.791223,
+              0.969716
+            ],
+            "costs": [
+              0.03089,
+              0.408917,
+              0.007146,
+              0.961138
+            ]
+          },
+          "Prove that the square root of 3 is irrational.": {
+            "scores": [
+              0.794347,
+              0.895639,
+              0.755622,
+              0.941962
+            ],
+            "costs": [
+              0.044046,
+              0.44266,
+              0.01201,
+              0.953168
+            ]
+          },
+          "A bag has 3 red and 2 blue balls. Draw two without replacement: what is the probability both are red?": {
+            "scores": [
+              0.844024,
+              0.93919,
+              0.801026,
+              0.977362
+            ],
+            "costs": [
+              0.03708,
+              0.426056,
+              0.009054,
+              0.978222
+            ]
+          }
+        }
+      }
+    },
+    "Software team": {
+      "labels": [
+        "Low-latency coder",
+        "Systems specialist",
+        "General assistant",
+        "Advanced coding model"
+      ],
+      "targets": [
+        "Design an idempotent webhook consumer with retries and exactly-once effects.",
+        "Diagnose a race condition in a shared in-memory cache.",
+        "Write a SQL query that returns the second-highest salary in each department."
+      ],
+      "observations": [
+        {
+          "query": "Implement merge sort in Python.",
+          "scores": [
+            0.94,
+            0.96,
+            0.79,
+            0.99
+          ],
+          "costs": [
+            0.08,
+            0.38,
+            0.06,
+            0.9
+          ]
+        },
+        {
+          "query": "Explain the difference between a process and a thread.",
+          "scores": [
+            0.82,
+            0.96,
+            0.91,
+            0.97
+          ],
+          "costs": [
+            0.07,
+            0.37,
+            0.05,
+            0.88
+          ]
+        },
+        {
+          "query": "Find the memory leak in this ownership graph.",
+          "scores": [
+            0.62,
+            0.94,
+            0.55,
+            0.98
+          ],
+          "costs": [
+            0.1,
+            0.45,
+            0.07,
+            1.0
+          ]
+        },
+        {
+          "query": "Write a SQL query with a window function for running totals.",
+          "scores": [
+            0.86,
+            0.97,
+            0.76,
+            0.98
+          ],
+          "costs": [
+            0.08,
+            0.41,
+            0.06,
+            0.94
+          ]
+        },
+        {
+          "query": "Review an API design for backwards compatibility.",
+          "scores": [
+            0.7,
+            0.96,
+            0.81,
+            0.98
+          ],
+          "costs": [
+            0.09,
+            0.44,
+            0.06,
+            1.0
+          ]
+        },
+        {
+          "query": "Fix an off-by-one error in binary search.",
+          "scores": [
+            0.96,
+            0.97,
+            0.83,
+            0.99
+          ],
+          "costs": [
+            0.06,
+            0.34,
+            0.05,
+            0.83
+          ]
+        },
+        {
+          "query": "Explain eventual consistency to a product manager.",
+          "scores": [
+            0.73,
+            0.92,
+            0.95,
+            0.96
+          ],
+          "costs": [
+            0.07,
+            0.38,
+            0.05,
+            0.9
+          ]
+        },
+        {
+          "query": "Design a rate limiter for a distributed API gateway.",
+          "scores": [
+            0.58,
+            0.97,
+            0.66,
+            0.98
+          ],
+          "costs": [
+            0.11,
+            0.49,
+            0.07,
+            1.04
+          ]
+        }
+      ],
+      "results": {
+        "1": {
+          "Design an idempotent webhook consumer with retries and exactly-once effects.": {
+            "scores": [
+              0.783649,
+              0.788795,
+              0.709522,
+              0.839402
+            ],
+            "costs": [
+              0.021188,
+              0.408159,
+              0.007987,
+              0.917652
+            ]
+          },
+          "Diagnose a race condition in a shared in-memory cache.": {
+            "scores": [
+              0.816975,
+              0.808909,
+              0.73824,
+              0.874618
+            ],
+            "costs": [
+              0.015194,
+              0.406166,
+              0.005491,
+              0.947927
+            ]
+          },
+          "Write a SQL query that returns the second-highest salary in each department.": {
+            "scores": [
+              0.79106,
+              0.780048,
+              0.709389,
+              0.831924
+            ],
+            "costs": [
+              0.015677,
+              0.396665,
+              0.005527,
+              0.955713
+            ]
+          }
+        },
+        "2": {
+          "Design an idempotent webhook consumer with retries and exactly-once effects.": {
+            "scores": [
+              0.694586,
+              0.739719,
+              0.68683,
+              0.781531
+            ],
+            "costs": [
+              0.030738,
+              0.426204,
+              0.013062,
+              0.954148
+            ]
+          },
+          "Diagnose a race condition in a shared in-memory cache.": {
+            "scores": [
+              0.716504,
+              0.750956,
+              0.710464,
+              0.810416
+            ],
+            "costs": [
+              0.02546,
+              0.426516,
+              0.009707,
+              0.975612
+            ]
+          },
+          "Write a SQL query that returns the second-highest salary in each department.": {
+            "scores": [
+              0.690978,
+              0.723857,
+              0.682203,
+              0.759356
+            ],
+            "costs": [
+              0.026085,
+              0.418052,
+              0.009847,
+              0.980887
+            ]
+          }
+        },
+        "4": {
+          "Design an idempotent webhook consumer with retries and exactly-once effects.": {
+            "scores": [
+              0.691058,
+              0.776337,
+              0.669651,
+              0.821137
+            ],
+            "costs": [
+              0.033864,
+              0.432555,
+              0.012358,
+              0.922978
+            ]
+          },
+          "Diagnose a race condition in a shared in-memory cache.": {
+            "scores": [
+              0.713231,
+              0.793605,
+              0.696621,
+              0.857617
+            ],
+            "costs": [
+              0.028354,
+              0.43819,
+              0.009262,
+              0.954793
+            ]
+          },
+          "Write a SQL query that returns the second-highest salary in each department.": {
+            "scores": [
+              0.689571,
+              0.767531,
+              0.67112,
+              0.813448
+            ],
+            "costs": [
+              0.028977,
+              0.424082,
+              0.009701,
+              0.961518
+            ]
+          }
+        },
+        "8": {
+          "Design an idempotent webhook consumer with retries and exactly-once effects.": {
+            "scores": [
+              0.676248,
+              0.799215,
+              0.698252,
+              0.853407
+            ],
+            "costs": [
+              0.029516,
+              0.429063,
+              0.010227,
+              0.908217
+            ]
+          },
+          "Diagnose a race condition in a shared in-memory cache.": {
+            "scores": [
+              0.693825,
+              0.816859,
+              0.722732,
+              0.884455
+            ],
+            "costs": [
+              0.024607,
+              0.436258,
+              0.007184,
+              0.942478
+            ]
+          },
+          "Write a SQL query that returns the second-highest salary in each department.": {
+            "scores": [
+              0.686038,
+              0.801673,
+              0.711336,
+              0.862823
+            ],
+            "costs": [
+              0.02417,
+              0.417981,
+              0.007125,
+              0.95115
+            ]
+          }
+        }
+      }
+    }
+  }
+}

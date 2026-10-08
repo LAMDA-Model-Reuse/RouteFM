@@ -37,6 +37,16 @@ On MMR-Bench, which is excluded from pretraining, RouteFM outperforms the
 strongest non-RouteFM baseline by **2.23 quality points** with only eight
 observations per candidate.
 
+## Interactive demo
+
+The [RouteFM demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)
+provides a free interactive explorer for switching among environments, target
+queries, and context budgets. Its predictions were precomputed with the
+released RouteFM-BGE checkpoint; the built-in behavioral contexts are
+synthetic illustrations, not benchmark records. For arbitrary target queries
+and custom context, run the full Gradio app in the
+[GitHub repository](https://github.com/LAMDA-Model-Reuse/RouteFM/tree/main/demo).
+
 ## Model description
 
 RouteFM turns LLM routing from repeated local fitting into global routing

@@ -145,8 +145,10 @@ parameters are updated.
 
 To explore the behavioral-context interface before installing anything, use
 the [live RouteFM-BGE demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo).
-Its built-in contexts are synthetic illustrations rather than benchmark
-records, and it does not invoke candidate LLMs.
+The free browser demo explores predictions precomputed with the released
+checkpoint; its built-in contexts are synthetic illustrations rather than
+benchmark records, and it does not invoke candidate LLMs. The full Gradio app
+in [`demo/`](demo) supports arbitrary target queries and custom JSON context.
 
 For precomputed Qwen or BGE embeddings, use `router.predict_arrays(...)` or
 prepare an episode following the documented [`.npz` schema](docs/CUSTOM_DATA.md):
