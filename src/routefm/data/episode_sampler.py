@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import math
 import random
-import re
 from collections import Counter, defaultdict, deque
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -20,12 +19,6 @@ from .sampler import (
     collate_episodes,
 )
 from .schema import RoutingRecord
-def _parameter_billions(model_id: str) -> float | None:
-    """Best-effort parameter count parsed from a candidate model name."""
-    matches = re.findall(r"(?<![\w.])(\d+(?:\.\d+)?)\s*[bB](?![\w])", model_id)
-    if not matches:
-        matches = re.findall(r"(\d+(?:\.\d+)?)\s*[bB]", model_id)
-    return max(float(value) for value in matches) if matches else None
 
 
 EPISODE_CYCLE = ("natural",) * 5 + ("opportunity",) * 3 + ("boundary",) * 2
@@ -306,16 +299,7 @@ class EpisodeSampler:
 
     @staticmethod
     def _point_cost(record: RoutingRecord) -> float:
-        """score/cost routing cost contract: RouterBench uses parameter count, missing is zero."""
-        if record.source.lower() == "routerbench":
-            mixture = re.findall(
-                r"(\d+(?:\.\d+)?)\s*[xX]\s*(\d+(?:\.\d+)?)\s*[bB]",
-                record.model_id,
-            )
-            if mixture:
-                return max(float(experts) * float(size) for experts, size in mixture)
-            parameters = _parameter_billions(record.model_id)
-            return 0.0 if parameters is None else max(0.0, float(parameters))
+        """Return the observed cost when available."""
         if not _cost_available(record) or not math.isfinite(float(record.cost)):
             return 0.0
         return max(0.0, float(record.cost))
