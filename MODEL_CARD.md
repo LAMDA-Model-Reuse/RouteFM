@@ -39,6 +39,26 @@ On MMR-Bench, which is excluded from pretraining, RouteFM outperforms the
 strongest non-RouteFM baseline by **2.23 quality points** with only eight
 observations per candidate.
 
+## Video overview
+
+90-second introductions in English and Chinese, with matching narration, on-screen text, and captions.
+
+### English
+
+<video controls playsinline preload="none" poster="https://huggingface.co/AIGNLAI/RouteFM/resolve/main/videos/routefm-en-poster.png" src="https://huggingface.co/AIGNLAI/RouteFM/resolve/main/videos/routefm-en.mp4"></video>
+
+[Download English MP4](videos/routefm-en.mp4) · [English subtitles](videos/routefm-en.srt)
+
+### 中文
+
+<video controls playsinline preload="none" poster="https://huggingface.co/AIGNLAI/RouteFM/resolve/main/videos/routefm-zh-poster.png" src="https://huggingface.co/AIGNLAI/RouteFM/resolve/main/videos/routefm-zh.mp4"></video>
+
+[下载中文版 MP4](videos/routefm-zh.mp4) · [中文字幕](videos/routefm-zh.srt)
+
+[Watch on the project page](https://lamda-model-reuse.github.io/RouteFM/#video) · [All video assets and checksums](https://github.com/LAMDA-Model-Reuse/RouteFM/releases/tag/paper-videos-v1)
+
+Concept footage and narration are AI-generated; method diagrams and results use original paper materials. The final composition is 1080p; the concept footage is native 720p.
+
 ## Interactive demo
 
 The [RouteFM demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo)

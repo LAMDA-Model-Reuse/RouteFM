@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "download_base": "https://github.com/LAMDA-Model-Reuse/RouteFM/releases/download/paper-videos-v1",
+  "files": [
+    {
+      "name": "routefm-en.mp4",
+      "sha256": "704ec7ea9337b15f66d1adcec24e5ebe46c9d4b7c0cf6feaa1a676276e3653bc",
+      "bytes": 18841653
+    },
+    {
+      "name": "routefm-en.srt",
+      "sha256": "bb90e1f0c6644749b34000bbfc7a0c78417455ca2c72903e33e90cc67bd6e521",
+      "bytes": 1581
+    },
+    {
+      "name": "routefm-en.vtt",
+      "sha256": "68ffc151e2246542551d1371486b06d1abc40d211e285c0a93583efa4f8d6abf",
+      "bytes": 1445
+    },
+    {
+      "name": "routefm-zh.mp4",
+      "sha256": "3637b8351fcedfa1d0f3ce18cf3441cf42a2869e224053d367b7779271ca903c",
+      "bytes": 18936877
+    },
+    {
+      "name": "routefm-zh.srt",
+      "sha256": "f6694e4da86c4e37066923026d15ca0fe4ce3a5517bfd92c4b3f0077c4ded830",
+      "bytes": 1852
+    },
+    {
+      "name": "routefm-zh.vtt",
+      "sha256": "fc4cd1d8a975637a85d5e72444c70ebc03b5fdd688cba0a8d00f012f281be313",
+      "bytes": 1698
+    }
+  ]
+}

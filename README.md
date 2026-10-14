@@ -26,10 +26,23 @@ candidate pools, and deployment conditions through behavioral context alone.**
 
 ## News
 
+- **2026-10-14:** Our 90-second paper videos are available in [English and Chinese](https://lamda-model-reuse.github.io/RouteFM/#video), with [MP4 and subtitle downloads](https://github.com/LAMDA-Model-Reuse/RouteFM/releases/tag/paper-videos-v1).
 - **2026-10-08:** A [one-click Colab](https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb) now runs the released RouteFM-BGE model on a free CPU runtime.
 - **2026-10-08:** The [project page](https://lamda-model-reuse.github.io/RouteFM/) and [interactive RouteFM-BGE demo](https://huggingface.co/spaces/AIGNLAI/RouteFM-Demo) are available.
 - **2026-09-29:** The [RouteFM paper](https://arxiv.org/abs/2609.37362) is available on arXiv.
 - **2026-09-29:** Code, frozen checkpoints, training configurations, and evaluation protocols are publicly released.
+
+## Video overview
+
+Watch the motivation, method, and key results in 90 seconds. Each version has matching narration, on-screen text, and captions.
+
+<p align="center">
+  <a href="https://lamda-model-reuse.github.io/RouteFM/#video"><img src="assets/routefm-en-poster.png" width="85%" alt="Watch the RouteFM paper video in English or Chinese"></a>
+</p>
+
+[Watch in English](https://lamda-model-reuse.github.io/RouteFM/#video) ·
+[观看中文版](https://lamda-model-reuse.github.io/RouteFM/?video=zh#video) ·
+[Download MP4s and subtitles](https://github.com/LAMDA-Model-Reuse/RouteFM/releases/tag/paper-videos-v1)
 
 ## Overview
 

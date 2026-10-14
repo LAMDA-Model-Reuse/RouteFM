@@ -32,6 +32,7 @@
         <span>RouteFM</span>
       </a>
       <nav aria-label="Primary navigation">
+        <a href="#video">Video</a>
         <a href="#method">Method</a>
         <a href="#results">Results</a>
         <a href="#demo">Demo</a>
@@ -48,6 +49,7 @@
         <p class="hero-copy">RouteFM learns a reusable routing capability across heterogeneous environments, then adapts to unseen tasks and candidate pools from a few behavioral observations—without retraining.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="https://arxiv.org/abs/2609.37362">Read the paper <span aria-hidden="true">↗</span></a>
+          <a class="button button-secondary" href="#video">Watch the 90s video <span aria-hidden="true">↓</span></a>
           <a class="button button-secondary" href="#demo">Try the live demo <span aria-hidden="true">↓</span></a>
           <a class="button button-secondary" href="https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb">Run in Colab <span aria-hidden="true">↗</span></a>
         </div>
@@ -87,6 +89,34 @@
           <a href="https://pypi.org/project/routefm-router/"><span>Package</span><strong>routefm-router</strong></a>
           <a href="https://colab.research.google.com/github/LAMDA-Model-Reuse/RouteFM/blob/main/examples/routefm_colab.ipynb"><span>Notebook</span><strong>Run in Colab</strong></a>
         </div>
+      </section>
+
+      <section class="section video-section" id="video">
+        <div class="section-index">90 seconds / Paper overview</div>
+        <div class="section-heading">
+          <h2>One frozen router.<br>A reusable capability.</h2>
+          <p>A short introduction to the problem, RouteFM's architecture, and the paper's key results. Choose English or Chinese narration and on-screen text.</p>
+        </div>
+        <div class="video-showcase" data-paper-video="routefm">
+          <div class="video-toolbar">
+            <div class="video-language-picker" role="group" aria-label="Video language">
+              <button type="button" data-video-language="en" aria-pressed="true">English</button>
+              <button type="button" data-video-language="zh" aria-pressed="false" lang="zh">中文</button>
+            </div>
+            <span>90s · 1080p · 16:9</span>
+          </div>
+          <video controls playsinline preload="none" poster="assets/routefm-en-poster.png" aria-label="RouteFM English paper overview">
+            <source src="videos/routefm-en.mp4" type="video/mp4">
+            <track kind="captions" src="videos/routefm-en.vtt" srclang="en" label="English">
+            Your browser does not support inline video. <a href="videos/routefm-en.mp4">Download the English MP4.</a>
+          </video>
+          <div class="video-downloads">
+            <a data-video-download="mp4" href="videos/routefm-en.mp4" download>Download MP4 ↓</a>
+            <a data-video-download="srt" href="videos/routefm-en.srt" download>Download subtitles ↓</a>
+            <a href="https://github.com/LAMDA-Model-Reuse/RouteFM/releases/tag/paper-videos-v1">All versions ↗</a>
+          </div>
+        </div>
+        <p class="video-note">Matching captions are included in each video. Concept footage and narration are AI-generated; method diagrams and results use original paper materials.</p>
       </section>
 
       <section class="section thesis" id="overview">
