@@ -4,21 +4,93 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing software release tag to check or publish
+        required: true
+        default: v1.1.0
+        type: string
+      dry_run:
+        description: Validate only; never build or upload distributions
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
 
+concurrency:
+  group: pypi-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
 jobs:
+  validate:
+    name: Validate software release
+    if: startsWith(github.event.release.tag_name || inputs.tag, 'v')
+    runs-on: ubuntu-latest
+    outputs:
+      publish_allowed: ${{ steps.version.outputs.publish_allowed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate tag and check PyPI
+        id: version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          import tomllib
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          tag = os.environ["RELEASE_TAG"]
+          pattern = r"v\d+\.\d+\.\d+(?:(?:a|b|rc)\d+|\.post\d+|\.dev\d+)?"
+          if not re.fullmatch(pattern, tag):
+              raise ValueError("Not a software version tag: " + tag)
+          with open("pyproject.toml", "rb") as stream:
+              project = tomllib.load(stream)["project"]
+          if tag != "v" + project["version"]:
+              raise ValueError("Release tag does not match pyproject.toml version")
+          url = "https://pypi.org/pypi/{}/{}/json".format(
+              urllib.parse.quote(project["name"], safe=""),
+              urllib.parse.quote(project["version"], safe=""),
+          )
+          try:
+              with urllib.request.urlopen(url, timeout=30):
+                  exists = True
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+              exists = False
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+              stream.write("publish_allowed=" + str(not exists).lower() + "\n")
+          print("Already on PyPI; upload skipped." if exists else "Version validated and not yet on PyPI.")
+          PY
+
   publish:
     name: Publish routefm-router to PyPI
+    needs: validate
+    if: >-
+      needs.validate.outputs.publish_allowed == 'true' &&
+      (github.event_name != 'workflow_dispatch' || inputs.dry_run == false)
     runs-on: ubuntu-latest
     environment:
       name: pypi
       url: https://pypi.org/p/routefm-router
     permissions:
+      contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
